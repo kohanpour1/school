@@ -5,6 +5,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,7 +48,6 @@ jobs:
             echo "KEY_PASSWORD=$KEY_PASSWORD" >> $GITHUB_ENV
             echo "Using repository keystore secrets"
           else
-            # Generate installable release key so APK is not unsigned
             keytool -genkeypair -v \
               -keystore "$GITHUB_WORKSPACE/boshra-ci.jks" \
               -alias boshra \
@@ -69,15 +71,35 @@ jobs:
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
           ls -la app/build/outputs/apk/release/
-          # Prefer non-unsigned name if present
           if ls app/build/outputs/apk/release/*-unsigned.apk 1>/dev/null 2>&1; then
-            echo "WARNING: still unsigned — check signing config"
+            echo "ERROR: APK is still unsigned"
             exit 1
           fi
+          APK=$(ls app/build/outputs/apk/release/*.apk | head -n1)
+          cp "$APK" "$GITHUB_WORKSPACE/boshra-school-release.apk"
+          echo "APK_PATH=$GITHUB_WORKSPACE/boshra-school-release.apk" >> $GITHUB_ENV
+          ls -lh "$GITHUB_WORKSPACE/boshra-school-release.apk"
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: boshra-release-apk
-          path: app/build/outputs/apk/release/*.apk
+          path: boshra-school-release.apk
           if-no-files-found: error
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.1-${{ github.run_number }}
+          name: بشری ${{ github.run_number }}
+          body: |
+            APK امضادار سامانه بشری (Release)
+            - نصب روی اندروید ۲۴+
+            - WebView + همگام‌سازی سرور
+            فایل: boshra-school-release.apk
+          files: boshra-school-release.apk
+          draft: false
+          prerelease: false
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
