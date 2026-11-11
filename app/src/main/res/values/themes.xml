@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Boshra" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#5B2C8A</item>
+        <item name="colorPrimaryDark">#4a2470</item>
+        <item name="colorAccent">#D4AC0D</item>
+        <item name="android:statusBarColor">#5B2C8A</item>
+    </style>
+</resources>
