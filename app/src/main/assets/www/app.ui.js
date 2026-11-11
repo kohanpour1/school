@@ -169,7 +169,7 @@ function renderCard(){
     <div class="font-bold text-base">${esc(studentName(st))}</div>
     <div class="text-xs text-gray-500 mt-1">آیدی ایتا: ${esc(st.eitaaId||"—")} · غیبت ${abs(st.id)} · کسر ${pen(st.id)}</div>
     <table class="w-full mt-3"><thead><tr><th>درس</th><th>کلاسی</th><th>آزمون</th><th>معدل۱</th><th>نهایی</th></tr></thead>
-    <tbody>${S.subjects.map(sub=>{const g=grades(st.id,sub);if([g.cls,g.exam,g.c1,g.f1,g.c2,g.f2].every(x=>x==null)return"";return`<tr><td>${esc(sub)}</td><td>${g.cls??"—"}</td><td>${g.exam??"—"}</td><td>${g.t1??"—"}</td><td class="font-bold">${g.final??"—"}</td></tr>`;}).join("")||"<tr><td colspan=5>بدون نمره</td></tr>"}</tbody></table>
+    <tbody>${S.subjects.map(sub=>{const g=grades(st.id,sub);if([g.cls,g.exam,g.c1,g.f1,g.c2,g.f2].every(x=>x==null))return"";return`<tr><td>${esc(sub)}</td><td>${g.cls??"—"}</td><td>${g.exam??"—"}</td><td>${g.t1??"—"}</td><td class="font-bold">${g.final??"—"}</td></tr>`;}).join("")||"<tr><td colspan=5>بدون نمره</td></tr>"}</tbody></table>
   </div>`).join("")||`<div class="card p-4">دانش‌آموزی نیست</div>`}`);
   document.getElementById("cl").onchange=e=>{ui.classId=e.target.value;render();};
 }
