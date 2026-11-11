@@ -30,33 +30,49 @@ jobs:
             chmod +x ./gradlew
           fi
 
-      - name: Decode keystore (optional)
+      - name: Prepare signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: |
-          if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "$KEYSTORE_BASE64" | base64 -d > release.jks
-            echo "HAS_KEYSTORE=true" >> $GITHUB_ENV
-          else
-            echo "HAS_KEYSTORE=false" >> $GITHUB_ENV
-            echo "No keystore secret — building unsigned release APK"
-          fi
-
-      - name: Build Release APK
-        env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          chmod +x ./gradlew
-          if [ "$HAS_KEYSTORE" = "true" ]; then
-            ./gradlew :app:assembleRelease --no-daemon \
-              -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/release.jks \
-              -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-              -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-              -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$GITHUB_WORKSPACE/release.jks"
+            echo "STORE_FILE=$GITHUB_WORKSPACE/release.jks" >> $GITHUB_ENV
+            echo "STORE_PASSWORD=$KEYSTORE_PASSWORD" >> $GITHUB_ENV
+            echo "KEY_ALIAS=$KEY_ALIAS" >> $GITHUB_ENV
+            echo "KEY_PASSWORD=$KEY_PASSWORD" >> $GITHUB_ENV
+            echo "Using repository keystore secrets"
           else
-            ./gradlew :app:assembleRelease --no-daemon
+            # Generate installable release key so APK is not unsigned
+            keytool -genkeypair -v \
+              -keystore "$GITHUB_WORKSPACE/boshra-ci.jks" \
+              -alias boshra \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass boshra123456 \
+              -keypass boshra123456 \
+              -dname "CN=Boshra School, OU=Edu, O=Boshra, L=Tehran, C=IR"
+            echo "STORE_FILE=$GITHUB_WORKSPACE/boshra-ci.jks" >> $GITHUB_ENV
+            echo "STORE_PASSWORD=boshra123456" >> $GITHUB_ENV
+            echo "KEY_ALIAS=boshra" >> $GITHUB_ENV
+            echo "KEY_PASSWORD=boshra123456" >> $GITHUB_ENV
+            echo "Generated CI keystore for installable release APK"
+          fi
+
+      - name: Build signed Release APK
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :app:assembleRelease --no-daemon \
+            -Pandroid.injected.signing.store.file="$STORE_FILE" \
+            -Pandroid.injected.signing.store.password="$STORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+          ls -la app/build/outputs/apk/release/
+          # Prefer non-unsigned name if present
+          if ls app/build/outputs/apk/release/*-unsigned.apk 1>/dev/null 2>&1; then
+            echo "WARNING: still unsigned — check signing config"
+            exit 1
           fi
 
       - name: Upload APK

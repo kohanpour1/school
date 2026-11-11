@@ -11,8 +11,22 @@ android {
         applicationId = "ir.boshra.school"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
+    }
+
+    signingConfigs {
+        create("release") {
+            // Values injected by CI via -Pandroid.injected.signing.*
+            // Local fallback: debug keystore if properties present
+            val storePath = System.getenv("STORE_FILE")
+            if (storePath != null) {
+                storeFile = file(storePath)
+                storePassword = System.getenv("STORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
@@ -22,6 +36,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Prefer injected signing from Gradle properties in CI
         }
         debug {
             applicationIdSuffix = ".debug"
