@@ -7,19 +7,28 @@
   <title>سامانه بشری</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{colors:{brand:{600:'#5B2C8A',700:'#4a2470'}}}}}</script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:{500:'#7d3fad',600:'#5B2C8A',700:'#4a2470'}}}}}</script>
   <style>
-    *{font-family:Vazirmatn,Tahoma,sans-serif}
-    body{background:linear-gradient(160deg,#f8f5fc,#efe8f7);min-height:100vh}
+    *{font-family:Vazirmatn,Tahoma,sans-serif;box-sizing:border-box}
+    body{background:linear-gradient(160deg,#f8f5fc,#efe8f7);min-height:100vh;margin:0}
     .card{background:#fff;border-radius:1rem;box-shadow:0 4px 20px rgba(91,44,138,.08);border:1px solid #ebe0f5}
-    .btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff}
-    input,select,textarea{border:1px solid #d4b8eb;border-radius:.5rem;padding:.5rem .75rem;width:100%}
-    th{background:#5B2C8A;color:#fff;padding:.45rem;font-size:.8rem}
-    td{padding:.4rem;border-bottom:1px solid #ebe0f5;text-align:center;font-size:.8rem}
+    .btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff;border:none}
+    .btn-d{background:#fee2e2;color:#b91c1c;border:none}
+    .btn-g{background:#dcfce7;color:#166534;border:none}
+    input,select,textarea{border:1px solid #d4b8eb;border-radius:.65rem;padding:.75rem .9rem;width:100%;font-size:.95rem;background:#fff}
+    .inp-lg{min-height:3.1rem;padding:.9rem 1rem;font-size:1rem}
+    th{background:#5B2C8A;color:#fff;padding:.55rem .4rem;font-size:.82rem}
+    td{padding:.55rem .4rem;border-bottom:1px solid #ebe0f5;text-align:center;font-size:.85rem}
     .logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
-    .toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:200;padding:.7rem 1.2rem;border-radius:.75rem;color:#fff;max-width:90vw}
-    .modal-bg{background:rgba(42,20,64,.5)}
-    .tab-on{border-bottom:3px solid #fff;font-weight:600}
+    .toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:200;padding:.75rem 1.25rem;border-radius:.75rem;color:#fff;max-width:92vw;font-size:.9rem}
+    .modal-bg{background:rgba(42,20,64,.55)}
+    .tab-on{border-bottom:3px solid #fff;font-weight:700}
+    .hdr{padding-top:1.1rem;padding-bottom:.75rem}
+    .hdr-title{font-size:1.05rem;line-height:1.5;margin-top:.15rem}
+    .hdr-sub{font-size:.78rem;opacity:.9;margin-top:.15rem}
+    .nav-btn{padding:.7rem .85rem;font-size:.86rem;white-space:nowrap}
+    .gap-form{display:flex;flex-direction:column;gap:.85rem}
+    label.lbl{font-size:.8rem;color:#5B2C8A;font-weight:600;margin-bottom:.2rem;display:block}
   </style>
 </head>
 <body>
