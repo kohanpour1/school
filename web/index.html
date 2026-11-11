@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#5B2C8A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>سامانه بشری | مدیریت مدرسه</title>
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50:'#f5f0fa',100:'#ebe0f5',200:'#d4b8eb',300:'#b88cdb',400:'#9b5fc7',500:'#7d3fad',600:'#5B2C8A',700:'#4a2470',800:'#3a1c58',900:'#2a1440' },
+            gold: { DEFAULT:'#D4AC0D', light:'#F7DC6F' }
+          },
+          fontFamily: { sans: ['Vazirmatn','Tahoma','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <style>
+    *{font-family:Vazirmatn,Tahoma,sans-serif}
+    body{background:linear-gradient(160deg,#f8f5fc,#efe8f7);min-height:100vh}
+    .card{background:#fff;border-radius:1rem;box-shadow:0 4px 20px rgba(91,44,138,.08);border:1px solid #ebe0f5}
+    .btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff}
+    .btn-p:hover{filter:brightness(1.08)}
+    .btn-g{background:linear-gradient(135deg,#D4AC0D,#F7DC6F);color:#2a1440;font-weight:600}
+    input,select,textarea{border:1px solid #d4b8eb;border-radius:.5rem;padding:.5rem .75rem;width:100%;background:#fff}
+    input:focus,select:focus,textarea:focus{outline:2px solid #9b5fc7;border-color:transparent}
+    .tab-on{border-bottom:3px solid #5B2C8A;color:#5B2C8A;font-weight:600}
+    .logo{width:56px;height:56px;border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 4px 14px rgba(91,44,138,.35)}
+    table{width:100%;border-collapse:collapse}
+    th{background:#5B2C8A;color:#fff;padding:.55rem;font-size:.8rem}
+    td{padding:.45rem;border-bottom:1px solid #ebe0f5;text-align:center;font-size:.8rem}
+    tr:nth-child(even){background:#faf7fc}
+    .toast{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%);z-index:200;padding:.7rem 1.2rem;border-radius:.75rem;color:#fff;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);max-width:90vw}
+    .modal-bg{background:rgba(42,20,64,.5);backdrop-filter:blur(4px)}
+    .av{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#ebe0f5}
+    .badge-a{background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:999px;font-size:11px}
+    .badge-p{background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:999px;font-size:11px}
+    .readonly-mask{pointer-events:none;opacity:.65}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="app-core.js"></script>
+  <script src="app-ui-a.js"></script>
+  <script src="app-ui-b.js"></script>
+</body>
+</html>
