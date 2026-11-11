@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="theme-color" content="#5B2C8A" />
+  <title>سامانه بشری</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:{600:'#5B2C8A',700:'#4a2470'}}}}}</script>
+  <style>
+    *{font-family:Vazirmatn,Tahoma,sans-serif}
+    body{background:linear-gradient(160deg,#f8f5fc,#efe8f7);min-height:100vh}
+    .card{background:#fff;border-radius:1rem;box-shadow:0 4px 20px rgba(91,44,138,.08);border:1px solid #ebe0f5}
+    .btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff}
+    input,select,textarea{border:1px solid #d4b8eb;border-radius:.5rem;padding:.5rem .75rem;width:100%}
+    th{background:#5B2C8A;color:#fff;padding:.45rem;font-size:.8rem}
+    td{padding:.4rem;border-bottom:1px solid #ebe0f5;text-align:center;font-size:.8rem}
+    .logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    .toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:200;padding:.7rem 1.2rem;border-radius:.75rem;color:#fff;max-width:90vw}
+    .modal-bg{background:rgba(42,20,64,.5)}
+    .tab-on{border-bottom:3px solid #fff;font-weight:600}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
