@@ -1,1 +1,61 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#5B2C8A"/>
+<title>سامانه بشری</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="logo.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:linear-gradient(165deg,#f8f5fc,#efe8f7 55%,#f3eef9);color:#1f1235;font-family:Vazirmatn,Tahoma,"Segoe UI",Arial,sans-serif}
+body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.card{background:#fff;border-radius:1.05rem;box-shadow:0 6px 20px rgba(91,44,138,.08);border:1px solid #ebe0f5;padding:1.05rem;margin-bottom:.85rem}
+.btn{border:0;border-radius:.75rem;padding:.85rem 1rem;font-weight:700;cursor:pointer;font-size:.95rem;font-family:inherit}
+.bp{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff}
+.bd{background:#fee2e2;color:#b91c1c}.bg{background:#dcfce7;color:#166534}
+.btn-out{background:rgba(255,255,255,.2);color:#fff;border:0;border-radius:.75rem;padding:.55rem .9rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit}
+.inp,input,select,textarea{width:100%;border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.9rem 1rem;font-size:1rem;margin-bottom:.65rem;font-family:inherit;background:#fff;min-height:3.15rem}
+label{display:block;font-size:.82rem;color:#5B2C8A;font-weight:600;margin-bottom:.28rem}
+header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 14px rgba(58,28,88,.25);padding-top:max(14px,env(safe-area-inset-top,14px))}
+header .top{padding:1.3rem .95rem .95rem;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.ht{font-weight:700;font-size:1.08rem;line-height:1.55;margin-top:.15rem}
+.hs{font-size:.8rem;opacity:.92;margin-top:.25rem;line-height:1.45}
+header .nav{display:flex;overflow-x:auto;border-top:1px solid rgba(255,255,255,.15)}
+header .nav button{background:0;border:0;color:rgba(255,255,255,.92);padding:.78rem .92rem;white-space:nowrap;font-size:.88rem;font-family:inherit;cursor:pointer}
+header .nav button.on{border-bottom:3px solid #fff;font-weight:700;background:rgba(255,255,255,.14)}
+main{max-width:48rem;margin:0 auto;padding:1rem .95rem 5.5rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.stat{text-align:center}.stat b{display:block;font-size:1.55rem;color:#5B2C8A;margin-bottom:.25rem}
+.stat b.red{color:#dc2626}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#5B2C8A;color:#fff;padding:.62rem .4rem;font-weight:600}
+td{padding:.58rem .4rem;border-bottom:1px solid #f0e8f7;text-align:center}
+.toast{position:fixed;bottom:1.3rem;left:50%;transform:translateX(-50%);background:#5B2C8A;color:#fff;padding:.85rem 1.25rem;border-radius:.9rem;display:none;z-index:99;max-width:92vw;font-size:.92rem}
+.toast.show{display:block}
+.modal{position:fixed;inset:0;background:rgba(40,15,60,.52);display:flex;align-items:center;justify-content:center;padding:1rem;z-index:50}
+.modal>div{background:#fff;border-radius:1.05rem;padding:1.15rem;width:100%;max-width:24rem;max-height:90vh;overflow:auto}
+.row{display:flex;gap:.55rem}.row>*{flex:1}
+.hide{display:none!important}
+.muted{color:#6b7280;font-size:.82rem;line-height:1.55}
+.sec{font-weight:700;color:#5B2C8A;font-size:1rem}
+.login-wrap{min-height:100vh;min-height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top, 28px) + 44px) 1.1rem 2.2rem}
+.login-card{width:100%;max-width:26rem;padding:1.7rem 1.25rem 1.5rem;margin-top:.4rem}
+.login-title{text-align:center;color:#4a2470;font-size:1.18rem;line-height:1.85;margin:0 0 .35rem;font-weight:800}
+.full{width:100%;margin-top:.35rem}
+.sm{padding:.35rem .55rem;font-size:.78rem}
+.logo{width:80px;height:80px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 1rem;background:#fff;box-shadow:0 4px 14px rgba(91,44,138,.2)}
+.login-logo{width:92px;height:92px;margin:0 auto 1rem}
+img.logo{padding:0;border:0}
+</style>
+</head>
+<body>
+<div id="app"><div style="padding:3rem 1rem;text-align:center;color:#5B2C8A;font-family:Tahoma,sans-serif">بارگذاری...</div></div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+<script src="app.features.js"></script>
+<script src="app.admin.js"></script>
+</body>
+</html>
