@@ -11,8 +11,8 @@ android {
         applicationId = "ir.boshra.school"
         minSdk = 24
         targetSdk = 35
-        versionCode = 18
-        versionName = "1.4.3"
+        versionCode = 19
+        versionName = "1.4.4"
     }
 
     buildTypes {
