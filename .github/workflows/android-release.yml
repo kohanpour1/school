@@ -84,11 +84,12 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.1.0-${{ github.run_number }}
-          name: بشری ${{ github.run_number }}
+          tag_name: v1.2.0-${{ github.run_number }}
+          name: بشری ${{ github.run_number }} · v1.2
           body: |
-            APK امضادار سامانه بشری v1.1
-            فونت وزیرمتن · نقش‌ها · دانش‌آموز/حضور/نمره/پیام/خروجی CSV · آیکون دایره‌ای
+            نسخه کامل سامانه بشری
+            - فونت فارسی وزیرمتن · UI بنفش · آیکون دایره‌ای
+            - نقش‌ها · حضور · نمره · پیام · خروجی CSV · ادمین
           files: boshra-school-release.apk
           draft: false
           prerelease: false
