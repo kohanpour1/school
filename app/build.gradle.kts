@@ -11,20 +11,8 @@ android {
         applicationId = "ir.boshra.school"
         minSdk = 24
         targetSdk = 35
-        versionCode = 3
-        versionName = "1.0.2"
-    }
-
-    signingConfigs {
-        create("release") {
-            val storePath = System.getenv("STORE_FILE")
-            if (storePath != null) {
-                storeFile = file(storePath)
-                storePassword = System.getenv("STORE_PASSWORD")
-                keyAlias = System.getenv("KEY_ALIAS")
-                keyPassword = System.getenv("KEY_PASSWORD")
-            }
-        }
+        versionCode = 11
+        versionName = "1.1.0"
     }
 
     buildTypes {

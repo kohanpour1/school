@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="theme-color" content="#5B2C8A" />
-  <title>سامانه بشری</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{colors:{brand:{500:'#7d3fad',600:'#5B2C8A',700:'#4a2470'}}}}}</script>
-  <style>
-    *{font-family:Vazirmatn,Tahoma,sans-serif;box-sizing:border-box}
-    body{background:linear-gradient(160deg,#f8f5fc,#efe8f7);min-height:100vh;margin:0}
-    .card{background:#fff;border-radius:1rem;box-shadow:0 4px 20px rgba(91,44,138,.08);border:1px solid #ebe0f5}
-    .btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff;border:none}
-    .btn-d{background:#fee2e2;color:#b91c1c;border:none}
-    .btn-g{background:#dcfce7;color:#166534;border:none}
-    input,select,textarea{border:1px solid #d4b8eb;border-radius:.65rem;padding:.75rem .9rem;width:100%;font-size:.95rem;background:#fff}
-    .inp-lg{min-height:3.1rem;padding:.9rem 1rem;font-size:1rem}
-    th{background:#5B2C8A;color:#fff;padding:.55rem .4rem;font-size:.82rem}
-    td{padding:.55rem .4rem;border-bottom:1px solid #ebe0f5;text-align:center;font-size:.85rem}
-    .logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
-    .toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:200;padding:.75rem 1.25rem;border-radius:.75rem;color:#fff;max-width:92vw;font-size:.9rem}
-    .modal-bg{background:rgba(42,20,64,.55)}
-    .tab-on{border-bottom:3px solid #fff;font-weight:700}
-    .hdr{padding-top:1.1rem;padding-bottom:.75rem}
-    .hdr-title{font-size:1.05rem;line-height:1.5;margin-top:.15rem}
-    .hdr-sub{font-size:.78rem;opacity:.9;margin-top:.15rem}
-    .nav-btn{padding:.7rem .85rem;font-size:.86rem;white-space:nowrap}
-    .gap-form{display:flex;flex-direction:column;gap:.85rem}
-    label.lbl{font-size:.8rem;color:#5B2C8A;font-weight:600;margin-bottom:.2rem;display:block}
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#5B2C8A"/>
+<title>سامانه بشری</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{brand:{50:'#f8f5fc',100:'#efe8f7',200:'#d4b8eb',500:'#7d3fad',600:'#5B2C8A',700:'#4a2470',800:'#3a1c58'}},fontFamily:{fa:['Vazirmatn','Tahoma','sans-serif']}}}}
+</script>
+<style>
+*{font-family:Vazirmatn,Tahoma,sans-serif;box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:linear-gradient(165deg,#f8f5fc 0%,#efe8f7 45%,#f3eef9 100%)}
+.card{background:#fff;border-radius:1.1rem;box-shadow:0 6px 24px rgba(91,44,138,.09);border:1px solid #ebe0f5}
+.btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff;border:0}
+.btn-d{background:#fee2e2;color:#b91c1c;border:0}
+.btn-g{background:#dcfce7;color:#166534;border:0}
+.btn-s{background:#f3e8ff;color:#5B2C8A;border:0}
+input,select,textarea{border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.85rem 1rem;width:100%;font-size:1rem;background:#fff;outline:none;transition:border .15s}
+input:focus,select:focus,textarea:focus{border-color:#5B2C8A;box-shadow:0 0 0 3px rgba(91,44,138,.12)}
+.inp-lg{min-height:3.25rem}
+th{background:#5B2C8A;color:#fff;padding:.65rem .45rem;font-size:.82rem;font-weight:600}
+td{padding:.6rem .45rem;border-bottom:1px solid #f0e8f7;text-align:center;font-size:.88rem}
+.logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;box-shadow:0 4px 14px rgba(91,44,138,.25)}
+.toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:300;padding:.85rem 1.35rem;border-radius:.9rem;color:#fff;max-width:92vw;font-size:.92rem;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.modal-bg{background:rgba(42,20,64,.55);backdrop-filter:blur(2px)}
+.tab-on{border-bottom:3px solid #fff;font-weight:700}
+.hdr{padding-top:1.15rem;padding-bottom:.85rem}
+.hdr-title{font-size:1.08rem;line-height:1.55;font-weight:700;margin-top:.2rem}
+.hdr-sub{font-size:.8rem;opacity:.92;margin-top:.2rem}
+.nav-btn{padding:.75rem .9rem;font-size:.88rem;white-space:nowrap}
+.gap-form{display:flex;flex-direction:column;gap:.9rem}
+label.lbl{font-size:.82rem;color:#5B2C8A;font-weight:600;margin-bottom:.25rem;display:block}
+.safe-bottom{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+</style>
 </head>
-<body>
-  <div id="app"></div>
-  <div id="toast" class="toast hidden"></div>
-  <script src="app.core.js"></script>
-  <script src="app.ui.js"></script>
+<body class="font-fa">
+<div id="app"></div>
+<div id="toast" class="toast hidden"></div>
+<script src="app.core.js"></script>
+<script src="app.ui.js"></script>
 </body>
 </html>
