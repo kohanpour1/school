@@ -5,42 +5,58 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#5B2C8A"/>
 <title>سامانه بشری</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config={theme:{extend:{colors:{brand:{50:'#f8f5fc',100:'#efe8f7',200:'#d4b8eb',500:'#7d3fad',600:'#5B2C8A',700:'#4a2470',800:'#3a1c58'}},fontFamily:{fa:['Vazirmatn','Tahoma','sans-serif']}}}}
-</script>
 <style>
-*{font-family:Vazirmatn,Tahoma,sans-serif;box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:linear-gradient(165deg,#f8f5fc 0%,#efe8f7 45%,#f3eef9 100%)}
+*{box-sizing:border-box;font-family:Tahoma,Arial,sans-serif}
+html,body{margin:0;padding:0;min-height:100%;background:linear-gradient(165deg,#f8f5fc,#efe8f7);color:#1f1235}
 .card{background:#fff;border-radius:1.1rem;box-shadow:0 6px 24px rgba(91,44,138,.09);border:1px solid #ebe0f5}
-.btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff;border:0}
-.btn-d{background:#fee2e2;color:#b91c1c;border:0}
-.btn-g{background:#dcfce7;color:#166534;border:0}
-input,select,textarea{border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.85rem 1rem;width:100%;font-size:1rem;background:#fff;outline:none}
-input:focus,select:focus,textarea:focus{border-color:#5B2C8A;box-shadow:0 0 0 3px rgba(91,44,138,.12)}
+.btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff;border:0;cursor:pointer}
+.btn-d{background:#fee2e2;color:#b91c1c;border:0;cursor:pointer}
+.btn-g{background:#dcfce7;color:#166534;border:0;cursor:pointer}
+input,select,textarea{border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.85rem 1rem;width:100%;font-size:1rem;background:#fff}
 .inp-lg{min-height:3.25rem}
-th{background:#5B2C8A;color:#fff;padding:.65rem .45rem;font-size:.82rem;font-weight:600}
+th{background:#5B2C8A;color:#fff;padding:.65rem .45rem;font-size:.82rem}
 td{padding:.6rem .45rem;border-bottom:1px solid #f0e8f7;text-align:center;font-size:.88rem}
-.logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;box-shadow:0 4px 14px rgba(91,44,138,.25)}
-.toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:300;padding:.85rem 1.35rem;border-radius:.9rem;color:#fff;max-width:92vw;font-size:.92rem}
+table{width:100%;border-collapse:collapse}
+.logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:300;padding:.85rem 1.35rem;border-radius:.9rem;color:#fff;max-width:92vw;display:none}
+.toast.show{display:block}
 .modal-bg{background:rgba(42,20,64,.55)}
+.hidden{display:none!important}
 .tab-on{border-bottom:3px solid #fff;font-weight:700}
 .hdr{padding-top:1.15rem;padding-bottom:.85rem}
 .hdr-title{font-size:1.08rem;line-height:1.55;font-weight:700;margin-top:.2rem}
 .hdr-sub{font-size:.8rem;opacity:.92;margin-top:.2rem}
-.nav-btn{padding:.75rem .9rem;font-size:.88rem;white-space:nowrap}
+.nav-btn{padding:.75rem .9rem;font-size:.88rem;white-space:nowrap;background:transparent;border:0;color:rgba(255,255,255,.9);cursor:pointer}
 .gap-form{display:flex;flex-direction:column;gap:.9rem}
 label.lbl{font-size:.82rem;color:#5B2C8A;font-weight:600;margin-bottom:.25rem;display:block}
-.safe-bottom{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
+.bg-brand-600{background:#5B2C8A}.bg-red-600{background:#dc2626}
+.text-brand-700{color:#4a2470}.text-brand-600{color:#5B2C8A}.text-brand-800{color:#3a1c58}
+.text-gray-500{color:#6b7280}.text-gray-600{color:#4b5563}.text-gray-400{color:#9ca3af}.text-red-600{color:#dc2626}.text-white{color:#fff}
+.text-center{text-align:center}.text-right{text-align:right}
+.font-bold{font-weight:700}.font-extrabold{font-weight:800}
+.text-xs{font-size:.75rem}.text-sm{font-size:.875rem}.text-base{font-size:1rem}.text-xl{font-size:1.25rem}.text-2xl{font-size:1.5rem}.text-3xl{font-size:1.875rem}
+.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-5{margin-top:1.25rem}
+.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
+.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-7{padding:1.75rem}
+.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}
+.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}
+.pb-2{padding-bottom:.5rem}.pb-24{padding-bottom:6rem}
+.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-full{border-radius:9999px}
+.w-full{width:100%}.w-9{width:2.25rem}.h-9{height:2.25rem}
+.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-3xl{max-width:48rem}.mx-auto{margin-left:auto;margin-right:auto}
+.flex{display:flex}.grid{display:grid}.grid-cols-2{grid-template-columns:1fr 1fr}
+.gap-2{gap:.5rem}.gap-3{gap:.75rem}.items-start{align-items:flex-start}.items-center{align-items:center}
+.justify-between{justify-content:space-between}.justify-center{justify-content:center}.flex-1{flex:1}.shrink-0{flex-shrink:0}
+.sticky{position:sticky}.fixed{position:fixed}.inset-0{top:0;right:0;bottom:0;left:0}.top-0{top:0}.bottom-4{bottom:1rem}.z-40{z-index:40}.z-50{z-index:50}
+.shadow{box-shadow:0 1px 3px rgba(0,0,0,.12)}.shadow-lg{box-shadow:0 10px 15px rgba(0,0,0,.1)}
+.min-h-screen{min-height:100vh}.border{border:1px solid #d4b8eb}.border-b{border-bottom:1px solid #ebe0f5}
+.nav-wrap{display:flex;overflow-x:auto}.bg-brand-100{background:#efe8f7}.bg-amber-50{background:#fffbeb}.text-amber-700{color:#b45309}
+.leading-7{line-height:1.75}.leading-9{line-height:2}
 </style>
 </head>
-<body class="font-fa">
-<div id="app"></div>
-<div id="toast" class="toast hidden"></div>
-<script src="app.core.js"></script>
-<script src="app.ui.js"></script>
-<script src="app.more.js"></script>
+<body>
+<div id="app"><div style="padding:2rem;text-align:center;color:#5B2C8A">در حال بارگذاری...</div></div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
 </body>
 </html>
