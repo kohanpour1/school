@@ -87,11 +87,11 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.4.7-${{ github.run_number }}
-          name: Boshra v1.4.7 build ${{ github.run_number }}
+          tag_name: v1.4.8-${{ github.run_number }}
+          name: Boshra v1.4.8 build ${{ github.run_number }}
           body: |
-            Complete Boshra School 1.4.7
-            Single assembled app.js, Eitaa 80254748, keyboard scroll, CSV for Excel.
+            Boshra School 1.4.8
+            Jalali 3-select, teacher assignment, attendance filters, keyboard scroll, Eitaa details.
           files: boshra-school-release.apk
           draft: false
           prerelease: false
