@@ -33,6 +33,37 @@ jobs:
             chmod +x ./gradlew
           fi
 
+      - name: Decode circular launcher icons
+        run: |
+          python3 << 'PY'
+          import base64, pathlib
+          mapping = {
+            "icons/ic_mdpi.b64": "app/src/main/res/mipmap-mdpi/ic_launcher.png",
+            "icons/ic_hdpi.b64": "app/src/main/res/mipmap-hdpi/ic_launcher.png",
+            "icons/ic_xhdpi.b64": "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+          }
+          for src, dst in mapping.items():
+            p = pathlib.Path(src)
+            if not p.exists():
+              print("skip missing", src)
+              continue
+            out = pathlib.Path(dst)
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_bytes(base64.b64decode(p.read_text().strip()))
+            # round variants same image
+            round_path = out.with_name("ic_launcher_round.png")
+            round_path.write_bytes(out.read_bytes())
+            print("wrote", out, out.stat().st_size)
+          # copy xhdpi to xx/xxx if missing
+          x = pathlib.Path("app/src/main/res/mipmap-xhdpi/ic_launcher.png")
+          if x.exists():
+            for dens in ("xxhdpi", "xxxhdpi"):
+              d = pathlib.Path(f"app/src/main/res/mipmap-{dens}")
+              d.mkdir(parents=True, exist_ok=True)
+              (d/"ic_launcher.png").write_bytes(x.read_bytes())
+              (d/"ic_launcher_round.png").write_bytes(x.read_bytes())
+          PY
+
       - name: Prepare signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
@@ -46,20 +77,16 @@ jobs:
             echo "STORE_PASSWORD=$KEYSTORE_PASSWORD" >> $GITHUB_ENV
             echo "KEY_ALIAS=$KEY_ALIAS" >> $GITHUB_ENV
             echo "KEY_PASSWORD=$KEY_PASSWORD" >> $GITHUB_ENV
-            echo "Using repository keystore secrets"
           else
             keytool -genkeypair -v \
               -keystore "$GITHUB_WORKSPACE/boshra-ci.jks" \
-              -alias boshra \
-              -keyalg RSA -keysize 2048 -validity 10000 \
-              -storepass boshra123456 \
-              -keypass boshra123456 \
+              -alias boshra -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass boshra123456 -keypass boshra123456 \
               -dname "CN=Boshra School, OU=Edu, O=Boshra, L=Tehran, C=IR"
             echo "STORE_FILE=$GITHUB_WORKSPACE/boshra-ci.jks" >> $GITHUB_ENV
             echo "STORE_PASSWORD=boshra123456" >> $GITHUB_ENV
             echo "KEY_ALIAS=boshra" >> $GITHUB_ENV
             echo "KEY_PASSWORD=boshra123456" >> $GITHUB_ENV
-            echo "Generated CI keystore for installable release APK"
           fi
 
       - name: Build signed Release APK
@@ -70,14 +97,12 @@ jobs:
             -Pandroid.injected.signing.store.password="$STORE_PASSWORD" \
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
-          ls -la app/build/outputs/apk/release/
           if ls app/build/outputs/apk/release/*-unsigned.apk 1>/dev/null 2>&1; then
-            echo "ERROR: APK is still unsigned"
+            echo "ERROR: unsigned APK"
             exit 1
           fi
           APK=$(ls app/build/outputs/apk/release/*.apk | head -n1)
           cp "$APK" "$GITHUB_WORKSPACE/boshra-school-release.apk"
-          echo "APK_PATH=$GITHUB_WORKSPACE/boshra-school-release.apk" >> $GITHUB_ENV
           ls -lh "$GITHUB_WORKSPACE/boshra-school-release.apk"
 
       - name: Upload APK artifact
@@ -90,13 +115,12 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.1-${{ github.run_number }}
+          tag_name: v1.1.0-${{ github.run_number }}
           name: بشری ${{ github.run_number }}
           body: |
-            APK امضادار سامانه بشری (Release)
-            - نصب روی اندروید ۲۴+
-            - WebView + همگام‌سازی سرور
-            فایل: boshra-school-release.apk
+            APK امضادار سامانه بشری v1.1
+            - آیکون دایره‌ای · فونت وزیرمتن · نقش‌ها
+            - دانش‌آموز / حضور / نمره / پیام / خروجی CSV
           files: boshra-school-release.apk
           draft: false
           prerelease: false
