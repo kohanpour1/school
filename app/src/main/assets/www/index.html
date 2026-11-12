@@ -7,92 +7,10 @@
 <title>سامانه بشری</title>
 <style>
 *{box-sizing:border-box;font-family:Tahoma,Vazirmatn,Arial,sans-serif}
-html,body{margin:0;padding:0;min-height:100%;min-height:100dvh;background:linear-gradient(165deg,#f8f5fc 0%,#efe8f7 50%,#f3eef9 100%);color:#1f1235}
-#app{min-height:100%}
-.card{background:#fff;border-radius:1.1rem;box-shadow:0 6px 24px rgba(91,44,138,.09);border:1px solid #ebe0f5}
-.btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff;border:0;cursor:pointer}
-.btn-d{background:#fee2e2;color:#b91c1c;border:0;cursor:pointer}
-.btn-g{background:#dcfce7;color:#166534;border:0;cursor:pointer}
-input,select,textarea{border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.85rem 1rem;width:100%;font-size:1rem;background:#fff;outline:none}
-.inp-lg{min-height:3.25rem}
-th{background:#5B2C8A;color:#fff;padding:.65rem .45rem;font-size:.82rem}
-td{padding:.6rem .45rem;border-bottom:1px solid #f0e8f7;text-align:center;font-size:.88rem}
-table{width:100%;border-collapse:collapse}
-.logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;object-fit:cover}
-img.logo{background:transparent!important;padding:0;border:0}
-.toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:300;padding:.85rem 1.35rem;border-radius:.9rem;color:#fff;max-width:92vw;font-size:.92rem;display:none}
-.toast.show{display:block}
-.modal-bg{background:rgba(42,20,64,.55)}
-.hidden{display:none!important}
-.tab-on{border-bottom:3px solid #fff;font-weight:700}
-.hdr{padding-top:1.15rem;padding-bottom:.85rem}/* safe-area applied inline in shell */
-.hdr-title{font-size:1.08rem;line-height:1.55;font-weight:700;margin-top:.2rem}
-.hdr-sub{font-size:.8rem;opacity:.92;margin-top:.2rem}
-.nav-btn{padding:.75rem .9rem;font-size:.88rem;white-space:nowrap;background:transparent;border:0;color:rgba(255,255,255,.9);cursor:pointer}
-.gap-form{display:flex;flex-direction:column;gap:.9rem}
-label.lbl{font-size:.82rem;color:#5B2C8A;font-weight:600;margin-bottom:.25rem;display:block}
-.bg-brand-600{background:#5B2C8A}
-.bg-red-600{background:#dc2626}
-.text-brand-700{color:#4a2470}
-.text-brand-600{color:#5B2C8A}
-.text-brand-800{color:#3a1c58}
-.text-gray-500{color:#6b7280}
-.text-gray-600{color:#4b5563}
-.text-gray-400{color:#9ca3af}
-.text-red-600{color:#dc2626}
-.text-white{color:#fff}
-.text-center{text-align:center}
-.text-right{text-align:right}
-.font-bold{font-weight:700}
-.font-extrabold{font-weight:800}
-.text-xs{font-size:.75rem}
-.text-sm{font-size:.875rem}
-.text-base{font-size:1rem}
-.text-xl{font-size:1.25rem}
-.text-2xl{font-size:1.5rem}
-.text-3xl{font-size:1.875rem}
-.leading-5{line-height:1.5}
-.leading-6{line-height:1.6}
-.leading-7{line-height:1.75}
-.leading-9{line-height:2}
-.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-3\.5{margin-top:.875rem}.mt-5{margin-top:1.25rem}
-.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-3\.5{margin-bottom:.875rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
-.p-2{padding:.5rem}.p-3{padding:.75rem}.p-3\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-7{padding:1.75rem}
-.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}
-.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}
-.pb-2{padding-bottom:.5rem}.pb-24{padding-bottom:6rem}
-.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}
-.w-full{width:100%}.w-9{width:2.25rem}.h-9{height:2.25rem}
-.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-3xl{max-width:48rem}
-.mx-auto{margin-left:auto;margin-right:auto}
-.flex{display:flex}.grid{display:grid}
-.grid-cols-2{grid-template-columns:1fr 1fr}
-.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}
-.items-start{align-items:flex-start}.items-center{align-items:center}
-.justify-between{justify-content:space-between}.justify-center{justify-content:center}
-.flex-1{flex:1}.shrink-0{flex-shrink:0}
-.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}
-.sticky{position:sticky}.fixed{position:fixed}.inset-0{top:0;right:0;bottom:0;left:0}
-.top-0{top:0}.bottom-4{bottom:1rem}.z-40{z-index:40}.z-50{z-index:50}
-.shadow{box-shadow:0 1px 3px rgba(0,0,0,.12)}.shadow-lg{box-shadow:0 10px 15px rgba(0,0,0,.1)}
-.min-h-screen{min-height:100vh}
-.space-y-2>*+*{margin-top:.5rem}.space-y-3>*+*{margin-top:.75rem}.space-y-3\.5>*+*{margin-top:.875rem}
-.border{border:1px solid #d4b8eb}.border-b{border-bottom:1px solid #ebe0f5}
-.border-t{border-top:1px solid rgba(255,255,255,.15)}
-.border-white\/15{border-color:rgba(255,255,255,.15)}
-.bg-white\/15{background:rgba(255,255,255,.15)}.bg-white\/20{background:rgba(255,255,255,.2)}
-.bg-brand-100{background:#efe8f7}.bg-amber-50{background:#fffbeb}
-.text-amber-700{color:#b45309}
-.whitespace-nowrap{white-space:nowrap}
-.object-cover{object-fit:cover}
-.rounded-full{border-radius:9999px}
-.ml-1{margin-left:.25rem}
-.max-h-\[92vh\]{max-height:92vh}
-.pt-0\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}
-header .nav-wrap{display:flex;overflow-x:auto}
-
-#app{padding-bottom:var(--kb,0px);transition:padding-bottom .2s}
-input:focus,textarea:focus,select:focus{scroll-margin:120px}
+html,body{margin:0;padding:0;min-height:100%;min-height:100dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:linear-gradient(165deg,#f8f5fc 0%,#efe8f7 50%,#f3eef9 100%);color:#1f1235}
+#app{min-height:100dvh;padding-bottom:24px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120%);background:#5B2C8A;color:#fff;padding:.7rem 1.2rem;border-radius:999px;z-index:9999;opacity:0;transition:.25s;font-size:.9rem}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
