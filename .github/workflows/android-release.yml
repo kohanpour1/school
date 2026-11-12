@@ -54,7 +54,7 @@ jobs:
               -keystore "$GITHUB_WORKSPACE/boshra-ci.jks" \
               -alias boshra -keyalg RSA -keysize 2048 -validity 10000 \
               -storepass boshra123456 -keypass boshra123456 \
-              -dname "CN=Boshra School, OU=Edu, O=Boshra, L=Tehran, C=IR"
+              -dname "CN=School App, OU=Edu, O=School, L=Tehran, C=IR"
             echo "STORE_FILE=$GITHUB_WORKSPACE/boshra-ci.jks" >> $GITHUB_ENV
             echo "STORE_PASSWORD=boshra123456" >> $GITHUB_ENV
             echo "KEY_ALIAS=boshra" >> $GITHUB_ENV
@@ -74,25 +74,25 @@ jobs:
             exit 1
           fi
           APK=$(ls app/build/outputs/apk/release/*.apk | head -n1)
-          cp "$APK" "$GITHUB_WORKSPACE/boshra-school-release.apk"
-          ls -lh "$GITHUB_WORKSPACE/boshra-school-release.apk"
+          cp "$APK" "$GITHUB_WORKSPACE/SchoolApp-release.apk"
+          ls -lh "$GITHUB_WORKSPACE/SchoolApp-release.apk"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: boshra-release-apk
-          path: boshra-school-release.apk
+          name: school-release-apk
+          path: SchoolApp-release.apk
           if-no-files-found: error
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.4.8-${{ github.run_number }}
-          name: Boshra v1.4.8 build ${{ github.run_number }}
+          tag_name: v1.5.1-${{ github.run_number }}
+          name: School App v1.5.1 build ${{ github.run_number }}
           body: |
-            Boshra School 1.4.8
-            Jalali 3-select, teacher assignment, attendance filters, keyboard scroll, Eitaa details.
-          files: boshra-school-release.apk
+            Stable 1.5.1 — layout 1.4.8 + multi-school setup + teacher scope + session persist.
+            Install local complete APK if CI parts lag behind feature set.
+          files: SchoolApp-release.apk
           draft: false
           prerelease: false
           make_latest: true
