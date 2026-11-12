@@ -33,7 +33,7 @@ jobs:
             chmod +x ./gradlew
           fi
 
-      - name: Decode circular launcher icons
+      - name: Decode circular launcher icons (optional)
         run: |
           python3 << 'PY'
           import base64, pathlib
@@ -42,26 +42,23 @@ jobs:
             "icons/ic_hdpi.b64": "app/src/main/res/mipmap-hdpi/ic_launcher.png",
             "icons/ic_xhdpi.b64": "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
           }
+          any_ok=False
           for src, dst in mapping.items():
             p = pathlib.Path(src)
             if not p.exists():
-              print("skip missing", src)
               continue
-            out = pathlib.Path(dst)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            out.write_bytes(base64.b64decode(p.read_text().strip()))
-            # round variants same image
-            round_path = out.with_name("ic_launcher_round.png")
-            round_path.write_bytes(out.read_bytes())
-            print("wrote", out, out.stat().st_size)
-          # copy xhdpi to xx/xxx if missing
-          x = pathlib.Path("app/src/main/res/mipmap-xhdpi/ic_launcher.png")
-          if x.exists():
-            for dens in ("xxhdpi", "xxxhdpi"):
-              d = pathlib.Path(f"app/src/main/res/mipmap-{dens}")
-              d.mkdir(parents=True, exist_ok=True)
-              (d/"ic_launcher.png").write_bytes(x.read_bytes())
-              (d/"ic_launcher_round.png").write_bytes(x.read_bytes())
+            try:
+              data=base64.b64decode(p.read_text().strip())
+              if len(data)<100: continue
+              out=pathlib.Path(dst)
+              out.parent.mkdir(parents=True, exist_ok=True)
+              out.write_bytes(data)
+              out.with_name("ic_launcher_round.png").write_bytes(data)
+              any_ok=True
+              print("ok", dst, len(data))
+            except Exception as e:
+              print("skip", src, e)
+          print("icons_done", any_ok)
           PY
 
       - name: Prepare signing keystore
@@ -119,8 +116,7 @@ jobs:
           name: بشری ${{ github.run_number }}
           body: |
             APK امضادار سامانه بشری v1.1
-            - آیکون دایره‌ای · فونت وزیرمتن · نقش‌ها
-            - دانش‌آموز / حضور / نمره / پیام / خروجی CSV
+            فونت وزیرمتن · نقش‌ها · دانش‌آموز/حضور/نمره/پیام/خروجی CSV · آیکون دایره‌ای
           files: boshra-school-release.apk
           draft: false
           prerelease: false
