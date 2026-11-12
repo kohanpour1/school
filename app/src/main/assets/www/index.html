@@ -2,66 +2,97 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,interactive-widget=resizes-content"/>
 <meta name="theme-color" content="#5B2C8A"/>
 <title>سامانه بشری</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="logo.js"></script>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:linear-gradient(165deg,#f8f5fc,#efe8f7 55%,#f3eef9);color:#1f1235;font-family:Vazirmatn,Tahoma,"Segoe UI",Arial,sans-serif}
-body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-.card{background:#fff;border-radius:1.05rem;box-shadow:0 6px 20px rgba(91,44,138,.08);border:1px solid #ebe0f5;padding:1.05rem;margin-bottom:.85rem}
-.btn{border:0;border-radius:.75rem;padding:.85rem 1rem;font-weight:700;cursor:pointer;font-size:.95rem;font-family:inherit}
-.bp{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff}
-.bd{background:#fee2e2;color:#b91c1c}.bg{background:#dcfce7;color:#166534}
-.btn-out{background:rgba(255,255,255,.2);color:#fff;border:0;border-radius:.75rem;padding:.55rem .9rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit}
-.inp,input,select,textarea{width:100%;border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.9rem 1rem;font-size:1rem;margin-bottom:.65rem;font-family:inherit;background:#fff;min-height:3.15rem}
-label{display:block;font-size:.82rem;color:#5B2C8A;font-weight:600;margin-bottom:.28rem}
-header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 14px rgba(58,28,88,.25);padding-top:max(14px,env(safe-area-inset-top,14px))}
-header .top{padding:1.3rem .95rem .95rem;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
-.ht{font-weight:700;font-size:1.08rem;line-height:1.55;margin-top:.15rem}
-.hs{font-size:.8rem;opacity:.92;margin-top:.25rem;line-height:1.45}
-header .nav{display:flex;overflow-x:auto;border-top:1px solid rgba(255,255,255,.15)}
-header .nav button{background:0;border:0;color:rgba(255,255,255,.92);padding:.78rem .92rem;white-space:nowrap;font-size:.88rem;font-family:inherit;cursor:pointer}
-header .nav button.on{border-bottom:3px solid #fff;font-weight:700;background:rgba(255,255,255,.14)}
-main{max-width:48rem;margin:0 auto;padding:1rem .95rem 5.5rem}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
-.stat{text-align:center}.stat b{display:block;font-size:1.55rem;color:#5B2C8A;margin-bottom:.25rem}
-.stat b.red{color:#dc2626}
-table{width:100%;border-collapse:collapse;font-size:.88rem}
-th{background:#5B2C8A;color:#fff;padding:.62rem .4rem;font-weight:600}
-td{padding:.58rem .4rem;border-bottom:1px solid #f0e8f7;text-align:center}
-.toast{position:fixed;bottom:1.3rem;left:50%;transform:translateX(-50%);background:#5B2C8A;color:#fff;padding:.85rem 1.25rem;border-radius:.9rem;display:none;z-index:99;max-width:92vw;font-size:.92rem}
+*{box-sizing:border-box;font-family:Tahoma,Vazirmatn,Arial,sans-serif}
+html,body{margin:0;padding:0;min-height:100%;min-height:100dvh;background:linear-gradient(165deg,#f8f5fc 0%,#efe8f7 50%,#f3eef9 100%);color:#1f1235}
+#app{min-height:100%;padding-bottom:var(--kb,0px);transition:padding-bottom .2s}
+.card{background:#fff;border-radius:1.1rem;box-shadow:0 6px 24px rgba(91,44,138,.09);border:1px solid #ebe0f5}
+.btn-p{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff;border:0;cursor:pointer}
+.btn-d{background:#fee2e2;color:#b91c1c;border:0;cursor:pointer}
+.btn-g{background:#dcfce7;color:#166534;border:0;cursor:pointer}
+input,select,textarea{border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.85rem 1rem;width:100%;font-size:1rem;background:#fff;outline:none}
+.inp-lg{min-height:3.25rem}
+input:focus,textarea:focus,select:focus{scroll-margin:120px}
+th{background:#5B2C8A;color:#fff;padding:.65rem .45rem;font-size:.82rem}
+td{padding:.6rem .45rem;border-bottom:1px solid #f0e8f7;text-align:center;font-size:.88rem}
+table{width:100%;border-collapse:collapse}
+.logo{border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;object-fit:cover}
+img.logo{background:transparent!important;padding:0;border:0}
+.toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:300;padding:.85rem 1.35rem;border-radius:.9rem;color:#fff;max-width:92vw;font-size:.92rem;display:none}
 .toast.show{display:block}
-.modal{position:fixed;inset:0;background:rgba(40,15,60,.52);display:flex;align-items:center;justify-content:center;padding:1rem;z-index:50}
-.modal>div{background:#fff;border-radius:1.05rem;padding:1.15rem;width:100%;max-width:24rem;max-height:90vh;overflow:auto}
-.row{display:flex;gap:.55rem}.row>*{flex:1}
-.hide{display:none!important}
-.muted{color:#6b7280;font-size:.82rem;line-height:1.55}
-.sec{font-weight:700;color:#5B2C8A;font-size:1rem}
-.login-wrap{min-height:100vh;min-height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top, 28px) + 44px) 1.1rem 2.2rem}
-.login-card{width:100%;max-width:26rem;padding:1.7rem 1.25rem 1.5rem;margin-top:.4rem}
-.login-title{text-align:center;color:#4a2470;font-size:1.18rem;line-height:1.85;margin:0 0 .35rem;font-weight:800}
-.full{width:100%;margin-top:.35rem}
-.sm{padding:.35rem .55rem;font-size:.78rem}
-.logo{width:80px;height:80px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 1rem;background:#fff;box-shadow:0 4px 14px rgba(91,44,138,.2)}
-.login-logo{width:92px;height:92px;margin:0 auto 1rem}
-img.logo{padding:0;border:0}
+.modal-bg{background:rgba(42,20,64,.55)}
+.hidden{display:none!important}
+.tab-on{border-bottom:3px solid #fff;font-weight:700}
+.hdr{padding-top:1.15rem;padding-bottom:.85rem}
+.hdr-title{font-size:1.08rem;line-height:1.55;font-weight:700;margin-top:.2rem}
+.hdr-sub{font-size:.8rem;opacity:.92;margin-top:.2rem}
+.nav-btn{padding:.75rem .9rem;font-size:.88rem;white-space:nowrap;background:transparent;border:0;color:rgba(255,255,255,.9);cursor:pointer}
+.gap-form{display:flex;flex-direction:column;gap:.9rem}
+label.lbl{font-size:.82rem;color:#5B2C8A;font-weight:600;margin-bottom:.25rem;display:block}
+.bg-brand-600{background:#5B2C8A}
+.bg-red-600{background:#dc2626}
+.text-brand-700{color:#4a2470}
+.text-brand-600{color:#5B2C8A}
+.text-brand-800{color:#3a1c58}
+.text-gray-500{color:#6b7280}
+.text-gray-600{color:#4b5563}
+.text-gray-400{color:#9ca3af}
+.text-red-600{color:#dc2626}
+.text-white{color:#fff}
+.text-center{text-align:center}
+.text-right{text-align:right}
+.font-bold{font-weight:700}
+.font-extrabold{font-weight:800}
+.text-xs{font-size:.75rem}
+.text-sm{font-size:.875rem}
+.text-base{font-size:1rem}
+.text-xl{font-size:1.25rem}
+.leading-5{line-height:1.5}
+.leading-6{line-height:1.6}
+.leading-7{line-height:1.75}
+.leading-9{line-height:1.75}
+.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-7{padding:1.75rem}
+.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}
+.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}
+.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-3\.5{margin-bottom:.875rem}.mb-6{margin-bottom:1.5rem}
+.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}
+.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}
+.w-full{width:100%}.w-9{width:2.25rem}.h-9{height:2.25rem}
+.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-3xl{max-width:48rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.flex{display:flex}.grid{display:grid}
+.grid-cols-2{grid-template-columns:1fr 1fr}
+.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}
+.items-start{align-items:flex-start}.items-center{align-items:center}
+.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.flex-1{flex:1}.shrink-0{flex-shrink:0}
+.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}
+.sticky{position:sticky}.fixed{position:fixed}.inset-0{top:0;right:0;bottom:0;left:0}
+.top-0{top:0}.bottom-4{bottom:1rem}.z-40{z-index:40}.z-50{z-index:50}
+.shadow{box-shadow:0 1px 3px rgba(0,0,0,.12)}.shadow-lg{box-shadow:0 10px 15px rgba(0,0,0,.1)}
+.min-h-screen{min-height:100vh}
+.space-y-2>*+*{margin-top:.5rem}.space-y-3>*+*{margin-top:.75rem}
+.border{border:1px solid #d4b8eb}.border-b{border-bottom:1px solid #ebe0f5}
+.border-t{border-top:1px solid rgba(255,255,255,.15)}
+.border-white\/15{border-color:rgba(255,255,255,.15)}
+.bg-white\/15{background:rgba(255,255,255,.15)}.bg-white\/20{background:rgba(255,255,255,.2)}
+.bg-brand-100{background:#efe8f7}.bg-amber-50{background:#fffbeb}
+.text-amber-700{color:#b45309}
+.whitespace-nowrap{white-space:nowrap}
+.object-cover{object-fit:cover}
+.rounded-full{border-radius:9999px}
+.ml-1{margin-left:.25rem}
+.max-h-\[92vh\]{max-height:92vh}
+.pt-0\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}
+header .nav-wrap{display:flex;overflow-x:auto}
 </style>
 </head>
 <body>
-<div id="app"><div style="padding:3rem 1rem;text-align:center;color:#5B2C8A;font-family:Tahoma,sans-serif">بارگذاری...</div></div>
+<div id="app"><div style="padding:2rem;text-align:center;color:#5B2C8A">در حال بارگذاری...</div></div>
 <div id="toast" class="toast"></div>
-<script src="app_d0.js"></script>
-<script src="app_d1.js"></script>
-<script src="app_d2.js"></script>
-<script src="app_d3.js"></script>
-<script src="app_d4.js"></script>
-<script src="app_d5.js"></script>
 <script src="app.js"></script>
-<script src="app.features.js"></script>
-<script src="app.admin.js"></script>
 </body>
 </html>
