@@ -15,6 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Assemble complete app.js from parts
+        run: python3 tools/assemble_app.py
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -84,12 +87,11 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.2.0-${{ github.run_number }}
-          name: بشری ${{ github.run_number }} · v1.2
+          tag_name: v1.4.7-${{ github.run_number }}
+          name: Boshra v1.4.7 build ${{ github.run_number }}
           body: |
-            نسخه کامل سامانه بشری
-            - فونت فارسی وزیرمتن · UI بنفش · آیکون دایره‌ای
-            - نقش‌ها · حضور · نمره · پیام · خروجی CSV · ادمین
+            Complete Boshra School 1.4.7
+            Single assembled app.js, Eitaa 80254748, keyboard scroll, CSV for Excel.
           files: boshra-school-release.apk
           draft: false
           prerelease: false
