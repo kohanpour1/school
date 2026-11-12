@@ -1,6 +1,7 @@
-1.5.0 multi-school
-- First-run setup: school name + logo (no default branding)
-- Roles: admin/teacher edit; manager/staff view + Excel export
-- Teacher sees only assigned class/subject (admin defines assignments)
-- Session persist localStorage
-- Jalali 3-select, keyboard scroll, Eitaa absence messages
+1.5.1
+UI layout = 1.4.8
++ first-run school name/logo setup
++ session persist until logout (localStorage)
++ teacher assignment + scoped teacher panel
++ Jalali 3-select from 1405/08/20
++ admin can change logo/name
