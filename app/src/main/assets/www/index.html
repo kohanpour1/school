@@ -7,9 +7,11 @@
 <title>سامانه بشری</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="logo.js"></script>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:linear-gradient(165deg,#f8f5fc,#efe8f7 55%,#f3eef9);color:#1f1235;font-family:Vazirmatn,Tahoma,"Segoe UI",Arial,sans-serif}
+body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .card{background:#fff;border-radius:1.05rem;box-shadow:0 6px 20px rgba(91,44,138,.08);border:1px solid #ebe0f5;padding:1.05rem;margin-bottom:.85rem}
 .btn{border:0;border-radius:.75rem;padding:.85rem 1rem;font-weight:700;cursor:pointer;font-size:.95rem;font-family:inherit}
 .bp{background:linear-gradient(135deg,#5B2C8A,#7d3fad);color:#fff}
@@ -17,9 +19,8 @@ html,body{margin:0;min-height:100%;background:linear-gradient(165deg,#f8f5fc,#ef
 .btn-out{background:rgba(255,255,255,.2);color:#fff;border:0;border-radius:.75rem;padding:.55rem .9rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit}
 .inp,input,select,textarea{width:100%;border:1.5px solid #d4b8eb;border-radius:.75rem;padding:.9rem 1rem;font-size:1rem;margin-bottom:.65rem;font-family:inherit;background:#fff;min-height:3.15rem}
 label{display:block;font-size:.82rem;color:#5B2C8A;font-weight:600;margin-bottom:.28rem}
-.logo{width:78px;height:78px;border-radius:50%;background:linear-gradient(145deg,#5B2C8A,#8E44AD);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:800;margin:0 auto 14px;box-shadow:0 4px 14px rgba(91,44,138,.28)}
-header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 14px rgba(58,28,88,.25)}
-header .top{padding:1.15rem .95rem .85rem;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 14px rgba(58,28,88,.25);padding-top:max(14px,env(safe-area-inset-top,14px))}
+header .top{padding:1.3rem .95rem .95rem;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
 .ht{font-weight:700;font-size:1.08rem;line-height:1.55;margin-top:.15rem}
 .hs{font-size:.8rem;opacity:.92;margin-top:.25rem;line-height:1.45}
 header .nav{display:flex;overflow-x:auto;border-top:1px solid rgba(255,255,255,.15)}
@@ -40,15 +41,15 @@ td{padding:.58rem .4rem;border-bottom:1px solid #f0e8f7;text-align:center}
 .hide{display:none!important}
 .muted{color:#6b7280;font-size:.82rem;line-height:1.55}
 .sec{font-weight:700;color:#5B2C8A;font-size:1rem}
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.1rem}
-.login-card{width:100%;max-width:26rem;padding:1.5rem 1.25rem 1.35rem}
+.login-wrap{min-height:100vh;min-height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top, 28px) + 44px) 1.1rem 2.2rem}
+.login-card{width:100%;max-width:26rem;padding:1.7rem 1.25rem 1.5rem;margin-top:.4rem}
 .login-title{text-align:center;color:#4a2470;font-size:1.18rem;line-height:1.85;margin:0 0 .35rem;font-weight:800}
 .full{width:100%;margin-top:.35rem}
 .sm{padding:.35rem .55rem;font-size:.78rem}
 </style>
 </head>
 <body>
-<div id="app"><div style="padding:2rem;text-align:center;color:#5B2C8A;font-family:Tahoma,sans-serif">بارگذاری...</div></div>
+<div id="app"><div style="padding:3rem 1rem;text-align:center;color:#5B2C8A;font-family:Tahoma,sans-serif">بارگذاری...</div></div>
 <div id="toast" class="toast"></div>
 <script src="app.js"></script>
 <script src="app.features.js"></script>

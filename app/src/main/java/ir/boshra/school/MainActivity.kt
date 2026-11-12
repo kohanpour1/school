@@ -2,11 +2,15 @@ package ir.boshra.school
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
@@ -14,8 +18,14 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         webView = WebView(this)
         setContentView(webView)
+        ViewCompat.setOnApplyWindowInsetsListener(webView) { v, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            insets
+        }
         webView.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
@@ -24,14 +34,9 @@ class MainActivity : AppCompatActivity() {
             allowContentAccess = true
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             cacheMode = WebSettings.LOAD_DEFAULT
-            // avoid blank page if remote assets fail
             blockNetworkImage = false
         }
-        webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-            }
-        }
+        webView.webViewClient = WebViewClient()
         webView.webChromeClient = WebChromeClient()
         webView.loadUrl("file:///android_asset/www/index.html")
     }
