@@ -1,9 +1,6 @@
 /**
- * سرور همگام‌سازی سامانه بشری
- * داده مشترک بین موبایل‌ها با ورود به حساب
- *
- * اجرا: npm install && npm start
- * پورت پیش‌فرض: 3847
+ * سرور همگام‌سازی سامانه بشری — چند موبایل با یک حساب
+ * npm install && npm start  (پورت 3847)
  */
 const express = require('express');
 const cors = require('cors');
@@ -22,8 +19,7 @@ function defaultDb() {
     settings: {
       schoolName: 'مؤسسه آموزشی غیر دولتی بشری',
       academicYear: '۱۴۰۴–۱۴۰۵',
-      stage: 'متوسطه دوم',
-      period: 'نوبت اول',
+      period: 'متوسطه دوم',
       absenceMode: 'per4',
       eitaaToken: 'bot524916:fcbbb06d-4ea5-4932-817c-f9b1a1a9993d',
       eitaaChannel: '@boshraM2',
@@ -32,27 +28,27 @@ function defaultDb() {
       cloudLink: 'https://drive.google.com/drive/folders/1kuNTgWcTzhS4LtcJYBfOIdbl3kJyuOAx?usp=sharing',
     },
     users: [
-      { id: 'u1', username: 'admin', password: 'admin123', name: 'مدیر سامانه', role: 'admin' },
-      { id: 'u2', username: 'modir', password: 'modir123', name: 'مدیر مدرسه', role: 'manager' },
-      { id: 'u3', username: 'moaven', password: 'm123', name: 'معاون', role: 'deputy' },
+      { id: 'u1', username: 'admin', password: 'admin123', name: 'مدیر سامانه', role: 'admin', subjects: [] },
+      { id: 'u2', username: 'modir', password: 'modir123', name: 'مدیر مدرسه', role: 'manager', subjects: [] },
+      { id: 'u3', username: 'moaven', password: 'm123', name: 'معاون', role: 'staff', subjects: [] },
       { id: 'u4', username: 'teacher1', password: 't123', name: 'خانم احمدی', role: 'teacher', subjects: ['ریاضی'] },
       { id: 'u5', username: 'teacher2', password: 't123', name: 'آقای کریمی', role: 'teacher', subjects: ['فارسی'] },
     ],
+    grades: ['دهم', 'یازدهم', 'دوازدهم'],
     classes: [
-      { id: 'c1', stage: 'متوسطه دوم', grade: 'دهم', classNo: '۱' },
-      { id: 'c2', stage: 'متوسطه دوم', grade: 'دهم', classNo: '۲' },
-      { id: 'c3', stage: 'متوسطه دوم', grade: 'یازدهم', classNo: '۱' },
+      { id: 'c1', grade: 'دهم', classNo: '۱' },
+      { id: 'c2', grade: 'یازدهم', classNo: '۱' },
+      { id: 'c3', grade: 'دوازدهم', classNo: '۱' },
     ],
-    subjects: ['ریاضی', 'فارسی', 'علوم', 'انگلیسی', 'دینی'],
+    subjects: ['ریاضی', 'فارسی', 'علوم', 'انگلیسی'],
+    assignments: [
+      { id: 'a1', classId: 'c1', subject: 'ریاضی', teacherId: 'u4' },
+      { id: 'a2', classId: 'c1', subject: 'فارسی', teacherId: 'u5' },
+    ],
     students: [
-      { id: 's1', first: 'آوا', last: 'محمدی', classId: 'c1', photo: '', phone: '09121234567', eitaaId: '11111111', parentName: 'والد آوا' },
-      { id: 's2', first: 'کیا', last: 'رضایی', classId: 'c1', photo: '', phone: '09129876543', eitaaId: '22222222', parentName: 'والد کیا' },
-      { id: 's3', first: 'هستی', last: 'احمدی', classId: 'c1', photo: '', phone: '09121112233', eitaaId: '33333333', parentName: 'والد هستی' },
-      { id: 's4', first: 'پارسا', last: 'نوری', classId: 'c1', photo: '', phone: '09124445566', eitaaId: '44444444', parentName: 'والد پارسا' },
-      { id: 's5', first: 'ملیکا', last: 'کریمی', classId: 'c1', photo: '', phone: '09127778899', eitaaId: '55555555', parentName: 'والد ملیکا' },
-      { id: 's6', first: 'آرین', last: 'حسینی', classId: 'c2', photo: '', phone: '09120001122', eitaaId: '66666666', parentName: 'والد آرین' },
-      { id: 's7', first: 'سارا', last: 'کاظمی', classId: 'c3', photo: '', phone: '09123334455', eitaaId: '77777777', parentName: 'والد سارا' },
-      { id: 's8', first: 'امیر', last: 'موسوی', classId: 'c3', photo: '', phone: '09126667788', eitaaId: '88888888', parentName: 'والد امیر' },
+      { id: 's1', first: 'آوا', last: 'محمدی', classId: 'c1', phone: '09120000001', eitaaId: '11111111' },
+      { id: 's2', first: 'کیا', last: 'رضایی', classId: 'c1', phone: '09120000002', eitaaId: '22222222' },
+      { id: 's3', first: 'هستی', last: 'احمدی', classId: 'c1', phone: '09120000003', eitaaId: '33333333' },
     ],
     attendance: [],
     scores: [],
@@ -80,11 +76,9 @@ function writeDb(db) {
 }
 
 const sessions = new Map();
-
 function makeToken() {
   return crypto.randomBytes(24).toString('hex');
 }
-
 function auth(req, res, next) {
   const h = req.headers.authorization || '';
   const token = h.startsWith('Bearer ') ? h.slice(7) : (req.query.token || '');
@@ -102,10 +96,10 @@ const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '8mb' }));
 
-const webRoot = path.join(__dirname, '..', 'web');
-if (fs.existsSync(webRoot)) {
-  app.use(express.static(webRoot));
-}
+const webRoot = path.join(__dirname, '..', 'app', 'src', 'main', 'assets', 'www');
+if (fs.existsSync(webRoot)) app.use(express.static(webRoot));
+const webAlt = path.join(__dirname, '..', 'web');
+if (fs.existsSync(webAlt)) app.use(express.static(webAlt));
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, name: 'boshra-school', time: new Date().toISOString() });
@@ -122,7 +116,7 @@ app.post('/api/login', (req, res) => {
     role: user.role,
     name: user.name,
     subjects: user.subjects || [],
-    exp: Date.now() + 7 * 24 * 3600 * 1000,
+    exp: Date.now() + 30 * 24 * 3600 * 1000,
   });
   res.json({
     token,
@@ -147,7 +141,7 @@ app.put('/api/state', auth, (req, res) => {
   const body = req.body;
   if (!body || typeof body !== 'object') return res.status(400).json({ error: 'bad_body' });
   const role = req.user.role;
-  if (role === 'manager' || role === 'deputy') {
+  if (role === 'manager' || role === 'deputy' || role === 'staff') {
     return res.status(403).json({ error: 'view_only' });
   }
   if (role !== 'admin' && role !== 'teacher') {
@@ -166,11 +160,11 @@ app.put('/api/state', auth, (req, res) => {
 
 app.post('/api/eitaa', auth, async (req, res) => {
   const db = readDb();
-  const token = db.settings?.eitaaToken;
+  const token = db.settings && db.settings.eitaaToken;
   const { chat_id, text } = req.body || {};
   if (!token || !chat_id || !text) return res.status(400).json({ error: 'missing' });
   try {
-    const url = `https://eitaayar.ir/api/${token}/sendMessage`;
+    const url = 'https://eitaayar.ir/api/' + token + '/sendMessage';
     const r = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -184,7 +178,6 @@ app.post('/api/eitaa', auth, async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Boshra school server on http://0.0.0.0:${PORT}`);
-  console.log(`Web UI: http://localhost:${PORT}/`);
+  console.log('Boshra school server on http://0.0.0.0:' + PORT);
   readDb();
 });
