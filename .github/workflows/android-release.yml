@@ -33,34 +33,6 @@ jobs:
             chmod +x ./gradlew
           fi
 
-      - name: Decode circular launcher icons (optional)
-        run: |
-          python3 << 'PY'
-          import base64, pathlib
-          mapping = {
-            "icons/ic_mdpi.b64": "app/src/main/res/mipmap-mdpi/ic_launcher.png",
-            "icons/ic_hdpi.b64": "app/src/main/res/mipmap-hdpi/ic_launcher.png",
-            "icons/ic_xhdpi.b64": "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
-          }
-          any_ok=False
-          for src, dst in mapping.items():
-            p = pathlib.Path(src)
-            if not p.exists():
-              continue
-            try:
-              data=base64.b64decode(p.read_text().strip())
-              if len(data)<100: continue
-              out=pathlib.Path(dst)
-              out.parent.mkdir(parents=True, exist_ok=True)
-              out.write_bytes(data)
-              out.with_name("ic_launcher_round.png").write_bytes(data)
-              any_ok=True
-              print("ok", dst, len(data))
-            except Exception as e:
-              print("skip", src, e)
-          print("icons_done", any_ok)
-          PY
-
       - name: Prepare signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
