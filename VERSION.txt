@@ -1,7 +1,3 @@
-1.5.1
-UI layout = 1.4.8
-+ first-run school name/logo setup
-+ session persist until logout (localStorage)
-+ teacher assignment + scoped teacher panel
-+ Jalali 3-select from 1405/08/20
-+ admin can change logo/name
+1.5.7
+versionCode=27
+name=مدیریت کلاس بشری
