@@ -2,23 +2,25 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,interactive-widget=resizes-content"/>
 <meta name="theme-color" content="#5B2C8A"/>
 <title>مدیریت کلاس بشری</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:#f6f1fb;color:#1f1235;font-family:Tahoma,sans-serif;overflow-y:auto}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#f6f1fb;color:#1f1235;font-family:Tahoma,Arial,sans-serif;overflow-y:auto}
 button,select,input,textarea{font-family:inherit;font-size:16px}
-.wrap{max-width:720px;margin:auto;padding:12px;padding-bottom:calc(var(--kb,0px) + 24px)}
+.wrap{max-width:720px;margin:auto;padding:12px;padding-bottom:calc(var(--kb,0px) + 28px)}
 .card{background:#fff;border:1px solid #ebe0f5;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(91,44,138,.08);margin-bottom:12px}
-h1,h2{color:#4a2470;margin:0 0 8px}
+h1,h2{color:#4a2470;margin:0 0 8px;font-size:1.15rem}
 .btn{background:#5B2C8A;color:#fff;border:0;border-radius:12px;min-height:44px;padding:0 14px;font-weight:700;width:100%;cursor:pointer}
-.btn.sm{width:auto}
-.ghost{background:#fff;color:#5B2C8A;border:1px solid #d4b8eb}
-.danger{color:#b91c1c;background:none;border:0;cursor:pointer}
+.btn.sm{width:auto;min-height:36px;padding:0 12px;font-size:13px}
+.ghost{background:#fff;color:#5B2C8A;border:1.5px solid #d4b8eb}
+.danger{color:#b91c1c;background:none;border:0;cursor:pointer;font-size:13px}
 label{display:block;font-size:12px;font-weight:700;color:#5B2C8A;margin:8px 0 4px}
 input,select,textarea{width:100%;min-height:44px;border:1.5px solid #d4b8eb;border-radius:12px;padding:8px 12px;background:#fff}
-header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:5}
-.nav{display:flex;gap:6px;overflow:auto;padding:8px}
+header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:5;padding-top:calc(12px + env(safe-area-inset-top, 18px))}
+.hdr{display:flex;justify-content:space-between;padding:4px 12px 8px;max-width:720px;margin:auto;align-items:flex-start;gap:8px}
+.nav{display:flex;gap:6px;overflow:auto;padding:4px 8px 10px;max-width:720px;margin:auto}
 .nav button{background:transparent;color:#fff;border:0;border-radius:12px;padding:8px 12px;white-space:nowrap;cursor:pointer}
 .nav button.on{background:#fff;color:#5B2C8A;font-weight:700}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -26,129 +28,32 @@ header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:5}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{background:#5B2C8A;color:#fff;padding:8px}
 td{padding:8px;text-align:center;border-bottom:1px solid #f3e8fb}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:12px;z-index:20}
-.modal .card{max-height:90dvh;overflow:auto;width:min(440px,100%)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + var(--kb,0px));background:#5B2C8A;color:#fff;padding:10px 16px;border-radius:12px;z-index:30}
-.stat{background:#fff;border-radius:16px;padding:14px;text-align:center}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:12px;z-index:20;overflow:auto}
+.modal .card{max-height:90dvh;overflow:auto;width:min(480px,100%);margin:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + var(--kb,0px));background:#5B2C8A;color:#fff;padding:10px 16px;border-radius:12px;z-index:30;max-width:90%}
+.stat{background:#fff;border-radius:16px;padding:14px;text-align:center;border:1px solid #ebe0f5}
 .stat b{display:block;font-size:24px;color:#5B2C8A}
 .muted{color:#6b7280;font-size:13px}
+.att-row{display:flex;gap:8px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #f0e8f7}
+.att-info{flex:1;min-width:0}
+.att-name{font-weight:700;word-break:break-word;line-height:1.35}
+.att-acts{display:flex;gap:6px;flex-shrink:0}
+.chip{min-width:56px;min-height:40px;border-radius:10px;border:1.5px solid #d4b8eb;background:#fff;color:#5B2C8A;font-weight:700;cursor:pointer;padding:0 10px}
+.chip.on-p{background:#16a34a;border-color:#16a34a;color:#fff}
+.chip.on-a{background:#dc2626;border-color:#dc2626;color:#fff}
+.avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#e8d5f5;flex-shrink:0}
+.filebtn{display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#5B2C8A;border:1.5px dashed #b794d4;border-radius:12px;min-height:44px;padding:8px 12px;cursor:pointer;width:100%;text-align:center}
+.filebtn input{display:none}
+.chk{display:flex;align-items:center;gap:8px;padding:6px 0}
+.chk input{width:18px;height:18px;min-height:18px}
+.absent-card{background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:10px;margin-top:8px}
+.search{margin-bottom:8px}
+.preview-box{background:#f8f5fc;border:1px solid #e8d5f5;border-radius:12px;padding:12px;margin-top:10px;overflow:auto;max-height:280px;font-size:12px}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script>
-const VER="1.6.0";
-const KEY="boshra_preview_160";
-const YEARS=["۱۴۰۵–۱۴۰۶","۱۴۰۶–۱۴۰۷","۱۴۰۷–۱۴۰۸","۱۴۰۸–۱۴۰۹","۱۴۰۹–۱۴۱۰"];
-const FA="۰۱۲۳۴۵۶۷۸۹";
-const fa=n=>String(n).replace(/\d/g,d=>FA[d]);
-const uid=()=>Math.random().toString(36).slice(2,10);
-function seed(){return{settings:{schoolName:"",logo:"",setupComplete:false,academicYear:YEARS[0],eitaaToken:"",eitaaAdminId:"",eitaaChannel:"@boshraM2"},users:[{id:"u1",username:"admin",password:"admin123",name:"مدیر سامانه",role:"admin"}],grades:["هفتم","هشتم","نهم","دهم","یازدهم","دوازدهم"],classes:[],subjects:["ریاضی","فارسی","علوم","انگلیسی"],assignments:[],students:[],assessments:[],scores:[],attendance:[],marks:[]};}
-let db; try{db=JSON.parse(localStorage.getItem(KEY))||seed(); if(!db.settings) db=seed();}catch(e){db=seed();}
-let session=null; try{session=JSON.parse(sessionStorage.getItem("boshra_sess")||"null");}catch(e){}
-let ui={tab:"dash",year:db.settings.academicYear||YEARS[0],term:"نوبت اول",classId:"",subject:"",date:"1405/07/01",toast:"",modal:null};
-function save(){localStorage.setItem(KEY,JSON.stringify(db));}
-function toast(m){ui.toast=m; render(); setTimeout(()=>{ui.toast=""; render();},2200);}
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-function to20(raw,max){raw=+raw;max=+max||20; if(!max||isNaN(raw)) return 0; return Math.round(raw/max*20*100)/100;}
-function monthDays(m){return m<=6?31:m<=11?30:29;}
-function clamp(y,m,d){y=+y||1405;m=+m||7;d=+d||1; if(y<1405){y=1405;m=7;d=1;} if(y>1409)y=1409; if(y===1405&&m<7){m=7;d=1;} if(m<1)m=1; if(m>12)m=12; const md=monthDays(m); if(d<1)d=1; if(d>md)d=md; return {y,m,d};}
-function fmt(y,m,d){const n=clamp(y,m,d); return n.y+"/"+String(n.m).padStart(2,"0")+"/"+String(n.d).padStart(2,"0");}
-function parseD(s){const p=String(s||"").split(/[\/\-]/).map(Number); return clamp(p[0],p[1],p[2]);}
-function showD(s){const n=parseD(s); return fa(n.y+"/"+String(n.m).padStart(2,"0")+"/"+String(n.d).padStart(2,"0"));}
-function klass(id){return db.classes.find(c=>c.id===id);}
-function clabel(c){return c?c.grade+" / کلاس "+c.classNo:"—";}
-function sname(s){return ((s.first||"")+" "+(s.last||"")).trim();}
-function mine(){if(!session) return []; if(session.role==="admin") return db.assignments; return db.assignments.filter(a=>a.teacherId===session.id);}
-function vclasses(){if(session&&session.role==="admin") return db.classes; const ids=new Set(mine().map(a=>a.classId)); return db.classes.filter(c=>ids.has(c.id));}
-function vsubs(cid){const rows=mine().filter(a=>!cid||a.classId===cid); const set=[...new Set(rows.map(a=>a.subject))]; if(session&&session.role==="admin"&&!set.length) return db.subjects.slice(); return set;}
-function assessments(cid,sub,term,year){return db.assessments.filter(a=>a.classId===cid&&a.subject===sub&&a.term===term&&a.year===year);}
-function entry(sid,aid){return db.scores.find(e=>e.studentId===sid&&e.assessmentId===aid);}
-function avg(a){if(!a.length) return null; return Math.round(a.reduce((s,n)=>s+n,0)/a.length*100)/100;}
-function summary(sid,sub,term,year,cid){const list=assessments(cid,sub,term,year); const cv=[],ev=[]; list.forEach(a=>{const e=entry(sid,a.id); if(!e)return; (a.type==="exam"?ev:cv).push(e.value20);}); const continuous=avg(cv), exam=avg(ev); const base=avg([continuous,exam].filter(n=>n!=null)); const plus=db.marks.filter(m=>m.studentId===sid&&m.subject===sub&&m.term===term&&m.kind==="plus").length; const minus=db.marks.filter(m=>m.studentId===sid&&m.subject===sub&&m.term===term&&m.kind==="minus").length; const fin=base==null?null:Math.max(0,Math.min(20,Math.round((base+plus*0.25-minus*0.25)*100)/100)); return {continuous,exam,fin};}
-function setScore(sid,aid,raw,max){db.scores=db.scores.filter(e=>!(e.studentId===sid&&e.assessmentId===aid)); if(raw===""||isNaN(+raw)) return; const a=db.assessments.find(x=>x.id===aid); const r=Math.max(0,Math.min(max,+raw)); db.scores.push({id:uid(),studentId:sid,assessmentId:aid,raw:r,maxScore:max,value20:to20(r,max),year:a?a.year:ui.year,term:a?a.term:ui.term});}
-async function eitaa(chat,text){const token=(db.settings.eitaaToken||"").trim(); if(!token||!chat) return false; try{const body=new URLSearchParams({chat_id:chat,text}); const r=await fetch("https://eitaayar.ir/api/"+encodeURIComponent(token)+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body}); const j=await r.json().catch(()=>({})); return !!(j&&j.ok);}catch(e){return false;}}
-function opts(arr,val){return arr.map(x=>'<option'+(String(x)===String(val)?' selected':'')+'>'+esc(x)+'</option>').join("");}
-function field(label,html){return '<label>'+label+'</label>'+html;}
-const inp='class="inp"';
-function screen(inner){return '<div class="wrap" style="min-height:100dvh;display:grid;place-items:center"><div class="card" style="width:min(440px,100%)">'+inner+'</div></div>';}
-function dateTriple(id){const p=parseD(ui.date); const years=[1405,1406,1407,1408,1409]; const months=[]; for(let m=1;m<=12;m++){if(p.y===1405&&m<7)continue; months.push(m);} const days=[]; for(let d=1;d<=monthDays(p.m);d++) days.push(d); const sel=(k,list,cur)=>'<select data-d="'+k+'">'+list.map(n=>'<option value="'+n+'"'+(n===cur?' selected':'')+'>'+fa(String(n).padStart(k==="y"?0:2,"0"))+'</option>').join("")+'</select>'; return '<div class="grid2" style="grid-template-columns:1fr 1fr 1fr">'+sel("y",years,p.y)+sel("m",months,p.m)+sel("d",days,p.d)+'</div>';}
-function render(){
-  const root=document.getElementById("app");
-  if(!db.settings.setupComplete){root.innerHTML=screen('<h1 style="text-align:center">راه‌اندازی مدرسه</h1><p class="muted" style="text-align:center">نام و لوگو، بعد ورود</p>'+(db.settings.logo?'<img src="'+db.settings.logo+'" style="width:72px;height:72px;border-radius:50%;display:block;margin:8px auto;object-fit:cover"/>':'')+field("نام مدرسه",'<input id="sn" placeholder="نام مدرسه"/>')+field("لوگو",'<input id="sl" type="file" accept="image/*"/>')+field("سال تحصیلی",'<select id="sy">'+opts(YEARS,YEARS[0])+'</select>')+'<button class="btn" id="ss" style="margin-top:12px">ذخیره و ادامه</button><p class="muted" style="text-align:center">نسخه '+VER+'</p>'); bindSetup(); return;}
-  if(!session){root.innerHTML=screen('<h1 style="text-align:center">'+esc(db.settings.schoolName)+'</h1><p class="muted" style="text-align:center">ورود به سامانه</p>'+field("نام کاربری",'<input id="u" autocomplete="username"/>')+field("رمز عبور",'<input id="p" type="password" autocomplete="current-password"/>')+'<button class="btn" id="go" style="margin-top:12px">ورود</button><p class="muted" style="text-align:center">نسخه '+VER+' · admin / admin123</p>'); document.getElementById("go").onclick=()=>{const u=db.users.find(x=>x.username===document.getElementById("u").value.trim()&&x.password===document.getElementById("p").value); if(!u){toast("نام کاربری یا رمز اشتباه است"); return;} session={id:u.id,name:u.name,role:u.role,username:u.username}; sessionStorage.setItem("boshra_sess",JSON.stringify(session)); render();}; return;}
-  const tabs=[["dash","خانه"],["stu","دانش‌آموز"],["att","حضور"],["score","نمره"],["rep","گزارش"],["msg","پیام"]]; if(session.role==="admin") tabs.push(["admin","ادمین"]);
-  const classes=vclasses(); if(!ui.classId||!classes.some(c=>c.id===ui.classId)) ui.classId=classes[0]?classes[0].id:"";
-  const subs=vsubs(ui.classId); if(!ui.subject||!subs.includes(ui.subject)) ui.subject=subs[0]||"";
-  let body="";
-  if(ui.tab==="dash"){const n=db.students.filter(s=>classes.some(c=>c.id===s.classId)).length; const asg=session.role==="admin"?db.assignments.length:mine().length; body='<div class="grid2"><div class="stat"><b>'+fa(n)+'</b>دانش‌آموز</div><div class="stat"><b>'+fa(classes.length)+'</b>کلاس</div><div class="stat"><b>'+fa(asg)+'</b>تخصیص</div><div class="stat"><b>'+fa(db.assessments.length)+'</b>ارزیابی</div></div>';}
-  if(ui.tab==="stu") body=viewStudents(classes);
-  if(ui.tab==="att") body=viewAtt();
-  if(ui.tab==="score") body=viewScore();
-  if(ui.tab==="rep") body=viewRep();
-  if(ui.tab==="msg") body=viewMsg();
-  if(ui.tab==="admin") body=viewAdmin();
-  root.innerHTML='<header><div style="display:flex;justify-content:space-between;padding:12px 12px 4px;max-width:720px;margin:auto"><div><div style="font-weight:800">'+esc(db.settings.schoolName)+'</div><div style="font-size:12px;opacity:.9">'+esc(session.name)+" · "+(session.role==="admin"?"ادمین":"معلم")+" · "+esc(ui.year)+" · "+esc(ui.term)+'</div></div><button id="out" style="background:rgba(255,255,255,.2);color:#fff;border:0;border-radius:12px;padding:8px 12px">خروج</button></div><div class="nav" style="max-width:720px;margin:auto">'+tabs.map(t=>'<button data-tab="'+t[0]+'" class="'+(ui.tab===t[0]?"on":"")+'">'+t[1]+'</button>').join("")+'</div></header><div class="wrap"><div class="grid2" style="margin-bottom:10px"><select id="yr">'+opts(YEARS,ui.year)+'</select><select id="tm"><option'+(ui.term==="نوبت اول"?" selected":"")+'>نوبت اول</option><option'+(ui.term==="نوبت دوم"?" selected":"")+'>نوبت دوم</option></select></div>'+body+'</div>'+(ui.toast?'<div class="toast">'+esc(ui.toast)+'</div>':'');
-  document.getElementById("out").onclick=()=>{session=null; sessionStorage.removeItem("boshra_sess"); render();};
-  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{ui.tab=b.dataset.tab; ui.modal=null; render();});
-  document.getElementById("yr").onchange=e=>{ui.year=e.target.value; render();};
-  document.getElementById("tm").onchange=e=>{ui.term=e.target.value; render();};
-  bindPage();
-}
-function bindSetup(){const f=document.getElementById("sl"); f.onchange=()=>{const file=f.files&&f.files[0]; if(!file)return; const r=new FileReader(); r.onload=()=>{db.settings.logo=r.result;}; r.readAsDataURL(file);}; document.getElementById("ss").onclick=()=>{const name=document.getElementById("sn").value.trim(); if(!name){toast("نام مدرسه را وارد کنید"); return;} db.settings.schoolName=name; db.settings.academicYear=document.getElementById("sy").value; ui.year=db.settings.academicYear; db.settings.setupComplete=true; save(); toast("ذخیره شد");};}
-function classSelect(){return '<select id="cl">'+vclasses().map(c=>'<option value="'+c.id+'"'+(c.id===ui.classId?" selected":"")+'>'+esc(clabel(c))+'</option>').join("")+'</select>';}
-function viewStudents(){const list=db.students.filter(s=>s.classId===ui.classId); return '<div class="card"><div class="row"><h2>دانش‌آموزان</h2><button class="btn sm" id="addst">افزودن</button></div>'+classSelect()+'<div style="margin-top:8px">'+list.map(s=>'<div class="row"><b>'+esc(sname(s))+'</b><span><button class="danger" data-ed="'+s.id+'">ویرایش</button> <button class="danger" data-rm="'+s.id+'">حذف</button></span></div>').join("")+(list.length?"":'<p class="muted">دانش‌آموزی نیست</p>')+'</div></div>'+modalHtml();}
-function viewAtt(){const list=db.students.filter(s=>s.classId===ui.classId); return '<div class="card"><h2>حضور · '+showD(ui.date)+'</h2>'+dateTriple()+'<div style="margin-top:8px">'+classSelect()+'</div>'+list.map(s=>'<div class="row"><b>'+esc(sname(s))+'</b><select data-st="'+s.id+'"><option value="present">حاضر</option><option value="absent">غایب</option><option value="late">تأخیر</option></select></div>').join("")+'<button class="btn" id="satt" style="margin-top:10px">ثبت حضور</button></div>';}
-function viewScore(){const locked=session.role==="teacher"&&!mine().some(a=>a.classId===ui.classId&&a.subject===ui.subject); const cols=assessments(ui.classId,ui.subject,ui.term,ui.year); const list=db.students.filter(s=>s.classId===ui.classId); let h='<div class="card grid2"><div>'+classSelect()+'</div><div><select id="sub">'+vsubs(ui.classId).map(s=>'<option'+(s===ui.subject?' selected':'')+'>'+esc(s)+'</option>').join("")+'</select></div></div>'; if(!locked){h+='<div class="card"><div class="row"><h2>ارزیابی‌های '+esc(ui.term)+'</h2><button class="btn sm" id="adda">+ ارزیابی</button></div>'+cols.map(a=>'<div class="row"><span>'+esc(a.title)+' · '+(a.type==="exam"?"آزمون":"کلاسی")+' · از '+fa(a.maxScore)+'</span><button class="danger" data-da="'+a.id+'">حذف</button></div>').join("")+(cols.length?"":'<p class="muted">هر تعداد ستون کلاسی یا آزمون اضافه کنید.</p>')+'</div>';} else h+='<p class="danger">این درس به شما تخصیص نشده.</p>'; h+='<div class="card" style="overflow:auto"><table><tr><th>نام</th>'+cols.map(a=>'<th>'+esc(a.title)+'</th>').join("")+'<th>مستمر</th><th>نهایی</th><th></th></tr>'+list.map(s=>{const g=summary(s.id,ui.subject,ui.term,ui.year,ui.classId); return '<tr><td style="text-align:right;font-weight:700">'+esc(sname(s))+'</td>'+cols.map(a=>{const e=entry(s.id,a.id); return '<td>'+(e?fa(e.raw)+'<div class="muted">≡'+fa(e.value20)+'</div>':"—")+'</td>';}).join("")+'<td>'+(g.continuous==null?"—":fa(g.continuous))+'</td><td><b>'+(g.fin==null?"—":fa(g.fin))+'</b></td><td>'+(locked?"":'<button class="btn sm" data-sc="'+s.id+'">ثبت</button>')+'</td></tr>';}).join("")+'</table></div>'+modalHtml(); return h;}
-function viewRep(){return '<div class="card"><h2>گزارش</h2>'+classSelect()+field("نوبت گزارش",'<select id="rm"><option>نوبت اول</option><option>نوبت دوم</option><option>هر دو</option></select>')+'<button class="btn" id="csv" style="margin-top:10px">دانلود CSV</button><p class="muted">مستمر و نهایی بر اساس نوبت جدا حساب می‌شوند.</p></div>';}
-function viewMsg(){return '<div class="card"><h2>پیام ایتا</h2><p class="muted">توکن فقط در ادمین ذخیره می‌شود.</p>'+field("آیدی",'<input id="cid" dir="ltr"/>')+field("متن",'<textarea id="txt" rows="4"></textarea>')+'<button class="btn" id="send" style="margin-top:10px">ارسال</button></div>';}
-function viewAdmin(){const teachers=db.users.filter(u=>u.role==="teacher"); return '<div class="card"><h2>ایتا</h2>'+field("توکن",'<input id="tok" type="password" dir="ltr" value="'+esc(db.settings.eitaaToken)+'"/>')+field("آیدی مدیر",'<input id="adm" dir="ltr" value="'+esc(db.settings.eitaaAdminId)+'"/>')+field("کانال",'<input id="ch" dir="ltr" value="'+esc(db.settings.eitaaChannel)+'"/>')+'<button class="btn" id="se">ذخیره ایتا</button></div>'
-+'<div class="card"><h2>پایه‌ها</h2>'+db.grades.map(g=>'<div class="row"><span>'+esc(g)+'</span><button class="danger" data-dg="'+esc(g)+'">حذف</button></div>').join("")+'<div class="row"><input id="ng" placeholder="پایه"/><button class="btn sm" id="ag">افزودن</button></div></div>'
-+'<div class="card"><h2>کلاس‌ها</h2>'+db.classes.map(c=>'<div class="row"><span>'+esc(clabel(c))+'</span><button class="danger" data-dc="'+c.id+'">حذف</button></div>').join("")+'<div class="grid2"><select id="cg">'+opts(db.grades,db.grades[0])+'</select><input id="cn" placeholder="شماره"/></div><button class="btn" id="ac" style="margin-top:8px">افزودن کلاس</button></div>'
-+'<div class="card"><h2>دروس</h2>'+db.subjects.map(s=>'<div class="row"><span>'+esc(s)+'</span><button class="danger" data-ds="'+esc(s)+'">حذف</button></div>').join("")+'<div class="row"><input id="ns" placeholder="درس"/><button class="btn sm" id="as">افزودن</button></div></div>'
-+'<div class="card"><h2>معلمان</h2>'+db.users.map(u=>'<div class="row"><span><b>'+esc(u.name)+'</b><div class="muted" dir="ltr">'+esc(u.username)+'</div></span>'+(u.role==="admin"?"":'<button class="danger" data-du="'+u.id+'">حذف</button>')+'</div>').join("")+field("نام",'<input id="tn"/>')+field("نام کاربری",'<input id="tu" dir="ltr"/>')+field("رمز",'<input id="tp" type="password" dir="ltr"/>')+'<button class="btn" id="at">ایجاد معلم</button></div>'
-+'<div class="card"><h2>تخصیص</h2><p class="muted">معلم فقط همین کلاس و درس را می‌بیند.</p>'+db.assignments.map(a=>{const t=db.users.find(u=>u.id===a.teacherId); return '<div class="row"><span>'+esc((t&&t.name)||"?")+" · "+esc(clabel(klass(a.classId)))+" · "+esc(a.subject)+'</span><button class="danger" data-das="'+a.id+'">حذف</button></div>';}).join("")+field("معلم",'<select id="atid">'+teachers.map(t=>'<option value="'+t.id+'">'+esc(t.name)+'</option>').join("")+'</select>')+field("کلاس",'<select id="acid">'+db.classes.map(c=>'<option value="'+c.id+'">'+esc(clabel(c))+'</option>').join("")+'</select>')+field("درس",'<select id="asub">'+opts(db.subjects,db.subjects[0])+'</select>')+'<button class="btn" id="aas">ثبت تخصیص</button></div>';}
-function modalHtml(){if(ui.modal==="stu"){const s=ui.edit||{}; return '<div class="modal"><div class="card"><h2>'+(s.id?"ویرایش":"دانش‌آموز")+'</h2><input id="sf" placeholder="نام" value="'+esc(s.first||"")+'"/><input id="sln" placeholder="نام خانوادگی" value="'+esc(s.last||"")+'" style="margin-top:8px"/><input id="seita" dir="ltr" placeholder="آیدی ایتا" value="'+esc(s.eitaaId||"")+'" style="margin-top:8px"/><button class="btn" id="sst" style="margin-top:8px">ذخیره</button><button class="btn ghost" id="sclose" style="margin-top:8px">بستن</button></div></div>';}
- if(ui.modal==="as") return '<div class="modal"><div class="card"><h2>ارزیابی جدید</h2><input id="atitle" placeholder="عنوان"/><select id="atype" style="margin-top:8px"><option value="class">نمره کلاسی</option><option value="exam">آزمون</option></select><select id="amax" style="margin-top:8px"><option value="5">سقف ۵</option><option value="10">سقف ۱۰</option><option value="20" selected>سقف ۲۰</option><option value="40">سقف ۴۰</option></select><p class="muted">معادل از ۲۰ = نمره ÷ سقف × ۲۰</p><button class="btn" id="asave">ذخیره</button><button class="btn ghost" id="aclose" style="margin-top:8px">بستن</button></div></div>';
- if(ui.modal==="sc"){const s=db.students.find(x=>x.id===ui.sid); const cols=assessments(ui.classId,ui.subject,ui.term,ui.year); return '<div class="modal"><div class="card"><h2>'+esc(s?sname(s):"")+'</h2>'+cols.map(a=>{const e=s&&entry(s.id,a.id); return '<label>'+esc(a.title)+' از '+fa(a.maxScore)+'</label><input data-in="'+a.id+'" data-max="'+a.maxScore+'" type="number" min="0" max="'+a.maxScore+'" step="0.25" value="'+(e?e.raw:"")+'"/>';}).join("")+'<div class="grid2" style="margin-top:8px"><button class="btn ghost" id="plus">مثبت</button><button class="btn ghost" id="minus">منفی</button></div><button class="btn" id="ssc" style="margin-top:8px">ذخیره نمرات</button><button class="btn ghost" id="cclose" style="margin-top:8px">بستن</button></div></div>';}
- return "";}
-function act(fn){try{fn(); save(); render();}catch(e){toast(e.message||"خطا");}}
-function bindPage(){
-  const cl=document.getElementById("cl"); if(cl) cl.onchange=e=>{ui.classId=e.target.value; render();};
-  const sub=document.getElementById("sub"); if(sub) sub.onchange=e=>{ui.subject=e.target.value; render();};
-  document.querySelectorAll("[data-d]").forEach(sel=>sel.onchange=()=>{const y=+document.querySelector('[data-d="y"]').value,m=+document.querySelector('[data-d="m"]').value,d=+document.querySelector('[data-d="d"]').value; ui.date=fmt(y,m,d); render();});
-  const addst=document.getElementById("addst"); if(addst) addst.onclick=()=>{ui.modal="stu"; ui.edit=null; render();};
-  document.querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{ui.modal="stu"; ui.edit=db.students.find(s=>s.id===b.dataset.ed); render();});
-  document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>act(()=>{db.students=db.students.filter(s=>s.id!==b.dataset.rm);}));
-  const sst=document.getElementById("sst"); if(sst) sst.onclick=()=>act(()=>{const first=document.getElementById("sf").value.trim(), last=document.getElementById("sln").value.trim(); if(!first&&!last) throw new Error("نام را وارد کنید"); if(ui.edit&&ui.edit.id){const s=db.students.find(x=>x.id===ui.edit.id); s.first=first; s.last=last; s.eitaaId=document.getElementById("seita").value.trim();} else db.students.push({id:uid(),first,last,classId:ui.classId,eitaaId:document.getElementById("seita").value.trim()}); ui.modal=null;});
-  const sclose=document.getElementById("sclose"); if(sclose) sclose.onclick=()=>{ui.modal=null; render();};
-  const satt=document.getElementById("satt"); if(satt) satt.onclick=async()=>{const list=db.students.filter(s=>s.classId===ui.classId); const absent=[]; list.forEach(s=>{const status=(document.querySelector('[data-st="'+s.id+'"]')||{}).value||"present"; db.attendance=db.attendance.filter(a=>!(a.studentId===s.id&&a.date===ui.date)); db.attendance.push({id:uid(),studentId:s.id,classId:ui.classId,date:ui.date,status}); if(status==="absent") absent.push(s);}); save(); const school=db.settings.schoolName; for(const s of absent){const text="اعلان غیبت\nنام و نام خانوادگی: "+sname(s)+"\nمدرسه: "+school+"\nتاریخ غیبت: "+showD(ui.date); if(s.eitaaId) await eitaa(s.eitaaId,text); if(db.settings.eitaaAdminId) await eitaa(db.settings.eitaaAdminId,text);} toast(absent.length?"ثبت شد و اعلان غیبت ارسال شد":"حضور ثبت شد");};
-  const adda=document.getElementById("adda"); if(adda) adda.onclick=()=>{ui.modal="as"; render();};
-  document.querySelectorAll("[data-da]").forEach(b=>b.onclick=()=>act(()=>{const id=b.dataset.da; if(db.scores.some(e=>e.assessmentId===id)&&session.role!=="admin") throw new Error("نمره ثبت‌شده دارد"); db.assessments=db.assessments.filter(a=>a.id!==id); if(session.role==="admin") db.scores=db.scores.filter(e=>e.assessmentId!==id);}));
-  const asave=document.getElementById("asave"); if(asave) asave.onclick=()=>act(()=>{const title=document.getElementById("atitle").value.trim(); if(!title) throw new Error("عنوان لازم است"); db.assessments.push({id:uid(),title,type:document.getElementById("atype").value,maxScore:+document.getElementById("amax").value,classId:ui.classId,subject:ui.subject,term:ui.term,year:ui.year}); ui.modal=null;});
-  const aclose=document.getElementById("aclose"); if(aclose) aclose.onclick=()=>{ui.modal=null; render();};
-  document.querySelectorAll("[data-sc]").forEach(b=>b.onclick=()=>{ui.modal="sc"; ui.sid=b.dataset.sc; render();});
-  const ssc=document.getElementById("ssc"); if(ssc) ssc.onclick=()=>act(()=>{document.querySelectorAll("[data-in]").forEach(inp=>setScore(ui.sid,inp.dataset.in,inp.value,+inp.dataset.max)); ui.modal=null;});
-  const plus=document.getElementById("plus"); if(plus) plus.onclick=()=>act(()=>{db.marks.push({id:uid(),studentId:ui.sid,subject:ui.subject,kind:"plus",term:ui.term,year:ui.year});});
-  const minus=document.getElementById("minus"); if(minus) minus.onclick=()=>act(()=>{db.marks.push({id:uid(),studentId:ui.sid,subject:ui.subject,kind:"minus",term:ui.term,year:ui.year});});
-  const cclose=document.getElementById("cclose"); if(cclose) cclose.onclick=()=>{ui.modal=null; render();};
-  const csv=document.getElementById("csv"); if(csv) csv.onclick=()=>{const mode=document.getElementById("rm").value; const terms=mode==="هر دو"?["نوبت اول","نوبت دوم"]:[mode]; const rows=[["نام","درس","نوبت","سال","مستمر","آزمون","نهایی"]]; const list=db.students.filter(s=>s.classId===ui.classId); const subs=vsubs(ui.classId); terms.forEach(term=>list.forEach(st=>subs.forEach(sub=>{const g=summary(st.id,sub,term,ui.year,ui.classId); rows.push([sname(st),sub,term,ui.year,g.continuous??"",g.exam??"",g.fin??""]);}))); const text=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\n"); const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob(["\ufeff"+text],{type:"text/csv"})); a.download="report.csv"; a.click(); toast("گزارش آماده شد");};
-  const send=document.getElementById("send"); if(send) send.onclick=async()=>{const ok=await eitaa(document.getElementById("cid").value.trim(), document.getElementById("txt").value.trim()); toast(db.settings.eitaaToken?(ok?"ارسال شد":"ارسال ناموفق"):"توکن در ادمین خالی است");};
-  const se=document.getElementById("se"); if(se) se.onclick=()=>act(()=>{db.settings.eitaaToken=document.getElementById("tok").value.trim(); db.settings.eitaaAdminId=document.getElementById("adm").value.trim(); db.settings.eitaaChannel=document.getElementById("ch").value.trim();});
-  const ag=document.getElementById("ag"); if(ag) ag.onclick=()=>act(()=>{const g=document.getElementById("ng").value.trim(); if(!g) return; if(db.grades.includes(g)) throw new Error("تکراری"); db.grades.push(g);});
-  document.querySelectorAll("[data-dg]").forEach(b=>b.onclick=()=>act(()=>{const g=b.dataset.dg; if(db.classes.some(c=>c.grade===g)) throw new Error("ابتدا کلاس‌ها را حذف کنید"); db.grades=db.grades.filter(x=>x!==g);}));
-  const ac=document.getElementById("ac"); if(ac) ac.onclick=()=>act(()=>{const g=document.getElementById("cg").value, n=document.getElementById("cn").value.trim(); if(!g||!n) throw new Error("پایه و شماره لازم است"); db.classes.push({id:uid(),grade:g,classNo:n});});
-  document.querySelectorAll("[data-dc]").forEach(b=>b.onclick=()=>act(()=>{const id=b.dataset.dc; if(db.students.some(s=>s.classId===id)) throw new Error("دانش‌آموز وصل است"); if(db.assignments.some(a=>a.classId===id)) throw new Error("تخصیص معلم وجود دارد"); db.classes=db.classes.filter(c=>c.id!==id);}));
-  const as=document.getElementById("as"); if(as) as.onclick=()=>act(()=>{const n=document.getElementById("ns").value.trim(); if(!n) return; if(db.subjects.includes(n)) throw new Error("تکراری"); db.subjects.push(n);});
-  document.querySelectorAll("[data-ds]").forEach(b=>b.onclick=()=>act(()=>{const n=b.dataset.ds; db.subjects=db.subjects.filter(s=>s!==n); db.assignments=db.assignments.filter(a=>a.subject!==n);}));
-  const at=document.getElementById("at"); if(at) at.onclick=()=>act(()=>{const name=document.getElementById("tn").value.trim(), username=document.getElementById("tu").value.trim(), password=document.getElementById("tp").value; if(!name||!username||!password) throw new Error("همه فیلدها لازم است"); if(db.users.some(u=>u.username===username)) throw new Error("نام کاربری تکراری"); db.users.push({id:uid(),name,username,password,role:"teacher"});});
-  document.querySelectorAll("[data-du]").forEach(b=>b.onclick=()=>act(()=>{if(db.assignments.some(a=>a.teacherId===b.dataset.du)) throw new Error("این معلم تخصیص دارد"); db.users=db.users.filter(u=>u.id!==b.dataset.du);}));
-  const aas=document.getElementById("aas"); if(aas) aas.onclick=()=>act(()=>{const teacherId=document.getElementById("atid").value, classId=document.getElementById("acid").value, subject=document.getElementById("asub").value; if(!teacherId||!classId||!subject) throw new Error("معلم، کلاس و درس را انتخاب کنید"); db.assignments.push({id:uid(),teacherId,classId,subject});});
-}
-function kb(){const vv=window.visualViewport; const gap=vv?Math.max(0,window.innerHeight-vv.height):0; document.documentElement.style.setProperty("--kb",gap+"px"); const el=document.activeElement; if(el&&(el.tagName==="INPUT"||el.tagName==="TEXTAREA"||el.tagName==="SELECT")) setTimeout(()=>el.scrollIntoView({block:"center"}),60);}
-window.visualViewport&&window.visualViewport.addEventListener("resize",kb);
-window.addEventListener("resize",kb); document.addEventListener("focusin",kb);
-render();
-</script>
+<script src="app.part1.js"></script>
+<script src="app.part2.js"></script>
 </body>
 </html>
