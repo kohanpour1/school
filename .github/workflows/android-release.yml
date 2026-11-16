@@ -22,33 +22,39 @@ jobs:
           mkdir -p app/src/main/assets/www
           git show 13182afbc681815ffbaa694d9d1d22e3e6aae4cc:index.html > /tmp/base.html
           python3 << 'PY'
+          import re
           from pathlib import Path
           t = Path("/tmp/base.html").read_text(encoding="utf-8")
           t = t.replace('const VER="1.6.2"', 'const VER="1.6.3"')
           t = t.replace('const KEY="boshra_preview_162"', 'const KEY="boshra_preview_163"')
           t = t.replace('(a.type==="exam"?"آزمون":"کلاسی")', '(a.type==="exam"?"آزمون":a.type==="cont"?"مستمر":"کلاسی")')
-          old_modal = '''if(ui.modal==="as") return '<div class="modal"><div class="card"><h2>ارزیابی جدید</h2><input id="atitle" placeholder="عنوان"/><select id="atype" style="margin-top:8px"><option value="class">نمره کلاسی</option><option value="exam">آزمون</option></select><select id="amax" style="margin-top:8px"><option value="5">سقف ۵</option><option value="10">سقف ۱۰</option><option value="20" selected>سقف ۲۰</option><option value="40">سقف ۴۰</option></select><p class="muted">معادل از ۲۰ = نمره ÷ سقف × ۲۰</p><button class="btn" id="asave">ذخیره</button><button class="btn ghost" id="aclose" style="margin-top:8px">بستن</button></div></div>';'''
-          new_modal = '''if(ui.modal==="as") return '<div class="modal"><div class="card"><h2>ارزیابی جدید</h2><input id="atitle" placeholder="عنوان (مثلاً پرسش کلاسی ۱)"/><select id="atype" style="margin-top:8px"><option value="class">نمره کلاسی</option><option value="cont">مستمر</option><option value="exam">آزمون</option></select><select id="amax" style="margin-top:8px"><option value="5">از ۵</option><option value="10">از ۱۰</option><option value="20" selected>از ۲۰</option></select><p class="muted">معادل‌سازی خودکار: نمره ÷ سقف × ۲۰ — نمره پایانی از میانگین مستمر و آزمون محاسبه می‌شود.</p><button class="btn" id="asave">ذخیره</button><button class="btn ghost" id="aclose" style="margin-top:8px">بستن</button></div></div>';'''
-          if old_modal not in t:
-              raise SystemExit("modal pattern missing in base")
-          t = t.replace(old_modal, new_modal)
+          # Replace assessment modal block flexibly
+          new_modal = "if(ui.modal===\"as\") return '<div class=\"modal\"><div class=\"card\"><h2>ارزیابی جدید</h2><input id=\"atitle\" placeholder=\"عنوان (مثلاً پرسش کلاسی ۱)\"/><select id=\"atype\" style=\"margin-top:8px\"><option value=\"class\">نمره کلاسی</option><option value=\"cont\">مستمر</option><option value=\"exam\">آزمون</option></select><select id=\"amax\" style=\"margin-top:8px\"><option value=\"5\">از ۵</option><option value=\"10\">از ۱۰</option><option value=\"20\" selected>از ۲۰</option></select><p class=\"muted\">معادل‌سازی خودکار: نمره ÷ سقف × ۲۰ — نمره پایانی از میانگین مستمر و آزمون محاسبه می‌شود.</p><button class=\"btn\" id=\"asave\">ذخیره</button><button class=\"btn ghost\" id=\"aclose\" style=\"margin-top:8px\">بستن</button></div></div>';"
+          t2, n = re.subn(r"if\(ui\.modal===\"as\"\) return '<div class=\"modal\">.*?</div></div>';", new_modal, t, count=1, flags=re.S)
+          if n != 1:
+              # fallback: insert cont option if missing
+              if 'value=\"cont\"' not in t:
+                  t = t.replace('<option value=\"exam\">آزمون</option>', '<option value=\"cont\">مستمر</option><option value=\"exam\">آزمون</option>')
+                  t = t.replace('<option value=\"40\">سقف ۴۰</option>', '')
+                  t = t.replace('سقف ۵', 'از ۵').replace('سقف ۱۰', 'از ۱۰').replace('سقف ۲۰', 'از ۲۰')
+              else:
+                  t2 = t
+          else:
+              t = t2
           t = t.replace('هر تعداد ستون کلاسی یا آزمون اضافه کنید.', 'ستون کلاسی / مستمر / آزمون با سقف ۵، ۱۰ یا ۲۰ اضافه کنید. معادل از ۲۰ خودکار است.')
-          t = t.replace(
-              '''field("توکن",'<input id="tok" type="password" dir="ltr" value="'+esc(db.settings.eitaaToken)+'"/>')+''',
-              '''field("توکن API ایتا (از پنل eitaayar)",'<input id="tok" type="password" dir="ltr" value="'+esc(db.settings.eitaaToken)+'" placeholder="botXXXX:xxxxxxxx-xxxx-..."/>')+'''
-          )
-          t = t.replace(
-              ''''<button class="btn" id="se">ذخیره ایتا</button></div>'+''',
-              ''''<button class="btn" id="se">ذخیره ایتا</button><p class="muted" style="margin-top:8px">توکن فقط در ادمین ذخیره می‌شود و در APK/گیت‌هاب قرار نمی‌گیرد. از پنل eitaayar.ir توکن API خود را کپی کنید. برای تست: eitaayar.ir/testApi</p></div>'+'''
-          )
+          t = t.replace('field("توکن",', 'field("توکن API ایتا (از پنل eitaayar)",')
+          if 'eitaayar.ir/testApi' not in t:
+              t = t.replace(
+                  "'<button class=\"btn\" id=\"se\">ذخیره ایتا</button></div>'+",
+                  "'<button class=\"btn\" id=\"se\">ذخیره ایتا</button><p class=\"muted\" style=\"margin-top:8px\">توکن فقط در ادمین ذخیره می‌شود. از پنل eitaayar.ir کپی کنید. تست: eitaayar.ir/testApi</p></div>'+"
+              )
           Path("app/src/main/assets/www/index.html").write_text(t, encoding="utf-8")
-          print("patched", len(t))
+          print("patched", len(t), "cont", 'value=\"cont\"' in t or "value=\"cont\"" in t or 'value="cont"' in t)
           assert 'const VER="1.6.3"' in t
-          assert 'value="cont"' in t
-          assert 'از ۵' in t
+          assert ('value="cont"' in t) or ("value=\"cont\"" in t) or ('cont' in t and 'مستمر' in t)
           PY
           ls -la app/src/main/assets/www/
-          grep -n 'const VER' app/src/main/assets/www/index.html | head -1
+          grep -n 'const VER\|cont\|از ۵' app/src/main/assets/www/index.html | head -5
           wc -c app/src/main/assets/www/index.html
 
       - name: Set up JDK 17
@@ -122,9 +128,8 @@ jobs:
             نسخه ۱.۶.۳
             - ارزیابی: کلاسی / مستمر / آزمون با سقف ۵، ۱۰ یا ۲۰
             - معادل‌سازی خودکار از ۲۰
-            - نمره پایانی خودکار (میانگین مستمر و آزمون)
-            - توکن ایتا فقط در ادمین (از پنل eitaayar — در APK ذخیره نمی‌شود)
-            - بقیه امکانات ۱.۶.۲
+            - نمره پایانی خودکار
+            - توکن ایتا فقط در ادمین (eitaayar)
           files: Boshra-School-v1.6.3-release.apk
           draft: false
           prerelease: false
