@@ -5,16 +5,17 @@
 <meta name="theme-color" content="#5B2C8A"/>
 <title>مدیریت کلاس بشری</title>
 </head><body>
-<div id="boot" style="font-family:Tahoma;text-align:center;padding:48px;color:#5B2C8A">بارگذاری نسخه ۱.۶.۲…</div>
+<div id="boot" style="font-family:Tahoma;text-align:center;padding:48px;color:#5B2C8A">بارگذاری ۱.۶.۲…</div>
 <script>
 (async function(){
   try{
-    const parts = await Promise.all([0,1,2,3].map(i=>fetch('p'+i+'.b64').then(r=>r.text())));
-    const b64 = parts.map(s=>s.trim()).join('');
-    const bin = atob(b64);
-    const bytes = new Uint8Array(bin.length);
-    for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-    const html = new TextDecoder('utf-8').decode(bytes);
+    const n = 6;
+    const parts = [];
+    for(let i=0;i<n;i++){
+      const t = await (await fetch('f'+i+'.txt')).text();
+      parts.push(t);
+    }
+    const html = parts.join('');
     document.open(); document.write(html); document.close();
   }catch(e){
     document.getElementById('boot').textContent='خطا: '+(e&&e.message?e.message:e);
