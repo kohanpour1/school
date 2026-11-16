@@ -18,10 +18,8 @@ jobs:
       - name: Prepare web assets
         run: |
           mkdir -p app/src/main/assets/www
-          cp -f index.html app/src/main/assets/www/index.html
-          sed -i 's/const VER="1.6.0"/const VER="1.6.2"/' app/src/main/assets/www/index.html || true
-          sed -i 's/const VER="1.6.1"/const VER="1.6.2"/' app/src/main/assets/www/index.html || true
-          grep -n 'const VER' app/src/main/assets/www/index.html | head -1
+          cp -f index.html p0.b64 p1.b64 p2.b64 p3.b64 app/src/main/assets/www/
+          ls -la app/src/main/assets/www/
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -91,13 +89,13 @@ jobs:
           tag_name: v1.6.2
           name: مدیریت کلاس بشری ۱.۶.۲
           body: |
-            نسخه ۱.۶.۲
+            نسخه ۱.۶.۲ نهایی
             - غایبین هر کلاس در خانه
-            - حضور با دکمه‌های سبز/قرمز و توضیح
+            - حضور سبز/قرمز + توضیح
             - پیام ایتا با انتخاب پایه/کلاس/دانش‌آموز
             - آپلود لوگو و عکس دانش‌آموز
-            - آدرس سرور در ورود + سرور محلی
-            - فاصله safe-area و اسکرول کیبورد
+            - آدرس سرور + سرور محلی
+            - safe-area و اسکرول کیبورد
           files: Boshra-School-v1.6.2-release.apk
           draft: false
           prerelease: false

@@ -1,59 +1,24 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
+<html lang="fa" dir="rtl"><head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,interactive-widget=resizes-content"/>
 <meta name="theme-color" content="#5B2C8A"/>
 <title>مدیریت کلاس بشری</title>
-<style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:#f6f1fb;color:#1f1235;font-family:Tahoma,Arial,sans-serif;overflow-y:auto}
-button,select,input,textarea{font-family:inherit;font-size:16px}
-.wrap{max-width:720px;margin:auto;padding:12px;padding-bottom:calc(var(--kb,0px) + 28px)}
-.card{background:#fff;border:1px solid #ebe0f5;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(91,44,138,.08);margin-bottom:12px}
-h1,h2{color:#4a2470;margin:0 0 8px;font-size:1.15rem}
-.btn{background:#5B2C8A;color:#fff;border:0;border-radius:12px;min-height:44px;padding:0 14px;font-weight:700;width:100%;cursor:pointer}
-.btn.sm{width:auto;min-height:36px;padding:0 12px;font-size:13px}
-.ghost{background:#fff;color:#5B2C8A;border:1.5px solid #d4b8eb}
-.danger{color:#b91c1c;background:none;border:0;cursor:pointer;font-size:13px}
-label{display:block;font-size:12px;font-weight:700;color:#5B2C8A;margin:8px 0 4px}
-input,select,textarea{width:100%;min-height:44px;border:1.5px solid #d4b8eb;border-radius:12px;padding:8px 12px;background:#fff}
-header{background:#5B2C8A;color:#fff;position:sticky;top:0;z-index:5;padding-top:calc(12px + env(safe-area-inset-top, 18px))}
-.hdr{display:flex;justify-content:space-between;padding:4px 12px 8px;max-width:720px;margin:auto;align-items:flex-start;gap:8px}
-.nav{display:flex;gap:6px;overflow:auto;padding:4px 8px 10px;max-width:720px;margin:auto}
-.nav button{background:transparent;color:#fff;border:0;border-radius:12px;padding:8px 12px;white-space:nowrap;cursor:pointer}
-.nav button.on{background:#fff;color:#5B2C8A;font-weight:700}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.row{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid #f0e8f7;padding:8px 0}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:#5B2C8A;color:#fff;padding:8px}
-td{padding:8px;text-align:center;border-bottom:1px solid #f3e8fb}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:12px;z-index:20;overflow:auto}
-.modal .card{max-height:90dvh;overflow:auto;width:min(480px,100%);margin:auto}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + var(--kb,0px));background:#5B2C8A;color:#fff;padding:10px 16px;border-radius:12px;z-index:30;max-width:90%}
-.stat{background:#fff;border-radius:16px;padding:14px;text-align:center;border:1px solid #ebe0f5}
-.stat b{display:block;font-size:24px;color:#5B2C8A}
-.muted{color:#6b7280;font-size:13px}
-.att-row{display:flex;gap:8px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #f0e8f7}
-.att-info{flex:1;min-width:0}
-.att-name{font-weight:700;word-break:break-word;line-height:1.35}
-.att-acts{display:flex;gap:6px;flex-shrink:0}
-.chip{min-width:56px;min-height:40px;border-radius:10px;border:1.5px solid #d4b8eb;background:#fff;color:#5B2C8A;font-weight:700;cursor:pointer;padding:0 10px}
-.chip.on-p{background:#16a34a;border-color:#16a34a;color:#fff}
-.chip.on-a{background:#dc2626;border-color:#dc2626;color:#fff}
-.avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#e8d5f5;flex-shrink:0}
-.filebtn{display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#5B2C8A;border:1.5px dashed #b794d4;border-radius:12px;min-height:44px;padding:8px 12px;cursor:pointer;width:100%;text-align:center}
-.filebtn input{display:none}
-.chk{display:flex;align-items:center;gap:8px;padding:6px 0}
-.chk input{width:18px;height:18px;min-height:18px}
-.absent-card{background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:10px;margin-top:8px}
-.search{margin-bottom:8px}
-.preview-box{background:#f8f5fc;border:1px solid #e8d5f5;border-radius:12px;padding:12px;margin-top:10px;overflow:auto;max-height:280px;font-size:12px}
-</style>
-</head>
-<body>
-<div id="app"></div>
-<script src="app.part1.js"></script>
-<script src="app.part2.js"></script>
-</body>
-</html>
+</head><body>
+<div id="boot" style="font-family:Tahoma;text-align:center;padding:48px;color:#5B2C8A">بارگذاری نسخه ۱.۶.۲…</div>
+<script>
+(async function(){
+  try{
+    const parts = await Promise.all([0,1,2,3].map(i=>fetch('p'+i+'.b64').then(r=>r.text())));
+    const b64 = parts.map(s=>s.trim()).join('');
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+    const html = new TextDecoder('utf-8').decode(bytes);
+    document.open(); document.write(html); document.close();
+  }catch(e){
+    document.getElementById('boot').textContent='خطا: '+(e&&e.message?e.message:e);
+  }
+})();
+</script>
+</body></html>
