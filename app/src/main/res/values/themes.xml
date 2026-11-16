@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Boshra" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#5B2C8A</item>
+        <item name="colorPrimaryDark">#4A2470</item>
+        <item name="colorAccent">#7B3FA0</item>
+        <item name="android:statusBarColor">#5B2C8A</item>
+        <item name="android:navigationBarColor">#5B2C8A</item>
+        <item name="android:windowBackground">#F6F1FB</item>
+    </style>
+</resources>
