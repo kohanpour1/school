@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,interactive-widget=resizes-content"/>
+<meta name="theme-color" content="#5B2C8A"/>
+<title>مدیریت کلاس بشری</title>
+</head><body>
+<div id="boot" style="font-family:Tahoma;text-align:center;padding:48px;color:#5B2C8A">بارگذاری ۱.۶.۳…</div>
+<script>
+(async function(){
+  try{
+    const n = 4;
+    const parts = [];
+    for(let i=0;i<n;i++){
+      const t = await (await fetch('f'+i+'.txt')).text();
+      parts.push(t);
+    }
+    const html = parts.join('');
+    document.open(); document.write(html); document.close();
+  }catch(e){
+    document.getElementById('boot').textContent='خطا: '+(e&&e.message?e.message:e);
+  }
+})();
+</script>
+</body></html>
