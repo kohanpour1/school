@@ -1,4 +1,4 @@
 1.6.0
-versionCode=30
 name=مدیریت کلاس بشری
-note=Android package version fixed (was stuck at 1.4.7)
+logic=dynamic-scores+teacher-acl+jalali+setup
+eitaa=admin-panel-only
