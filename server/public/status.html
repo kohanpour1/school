@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#5B2C8A"/>
+<title>سرور مدیریت کلاس بشری</title>
+<style>
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f6f1fb;color:#1f1235}
+.hdr{background:#5B2C8A;color:#fff;padding:24px 16px;text-align:center}
+.card{max-width:480px;margin:24px auto;background:#fff;border-radius:16px;padding:20px;border:1px solid #ebe0f5;box-shadow:0 6px 20px rgba(91,44,138,.08)}
+a{color:#5B2C8A;font-weight:700}
+.btn{display:block;background:#5B2C8A;color:#fff;text-decoration:none;text-align:center;padding:14px;border-radius:12px;margin-top:12px;font-weight:700}
+li{margin:8px 0}
+.muted{color:#6b7280;font-size:13px}
+</style>
+</head>
+<body>
+<div class="hdr"><h1 style="margin:0">مدیریت کلاس بشری</h1><p style="margin:8px 0 0;opacity:.9">سرور محلی نسخه ۱.۶.۲</p></div>
+<div class="card">
+  <h2 style="color:#4a2470;margin-top:0">لینک اتصال گوشی‌ها</h2>
+  <p class="muted">همه گوشی‌ها باید به همان وای‌فای متصل باشند. پورت: {{PORT}}</p>
+  <ul>{{IPS}}</ul>
+  <a class="btn" href="/app">باز کردن برنامه</a>
+  <p class="muted" style="margin-top:16px">این صفحه با اجرای فایل سرور باز می‌شود. پیش‌نیاز: Node.js (نصب‌کننده خودکار در پوشه server).</p>
+</div>
+</body>
+</html>
