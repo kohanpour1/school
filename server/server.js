@@ -29,7 +29,7 @@ function send(res, code, body, type) {
 const server = http.createServer((req, res) => {
   const url = (req.url || "/").split("?")[0];
   if (url === "/api/health") {
-    return send(res, 200, JSON.stringify({ ok: true, version: "1.6.2" }), "application/json");
+    return send(res, 200, JSON.stringify({ ok: true, version: "1.6.3" }), "application/json");
   }
   if (url === "/" || url === "/status") {
     const ips = localIPs();
@@ -57,7 +57,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, "0.0.0.0", () => {
   const ips = localIPs();
-  console.log("Boshra School Server 1.6.2");
+  console.log("Boshra School Server 1.6.3");
   console.log("Local:  http://127.0.0.1:" + PORT + "/");
   ips.forEach((ip) => console.log("LAN:    http://" + ip + ":" + PORT + "/"));
   console.log("App:    /app   Status: /");
