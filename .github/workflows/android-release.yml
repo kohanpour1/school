@@ -15,6 +15,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare web assets
+        run: |
+          mkdir -p app/src/main/assets/www
+          cp -f index.html app/src/main/assets/www/index.html
+          # bump version markers if present
+          sed -i 's/const VER="1.6.0"/const VER="1.6.1"/' app/src/main/assets/www/index.html || true
+          sed -i 's/boshra_preview_160/boshra_preview_161/' app/src/main/assets/www/index.html || true
+          grep -n 'const VER' app/src/main/assets/www/index.html | head -1
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
