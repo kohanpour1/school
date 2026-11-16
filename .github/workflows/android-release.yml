@@ -19,9 +19,8 @@ jobs:
         run: |
           mkdir -p app/src/main/assets/www
           cp -f index.html app/src/main/assets/www/index.html
-          # bump version markers if present
-          sed -i 's/const VER="1.6.0"/const VER="1.6.1"/' app/src/main/assets/www/index.html || true
-          sed -i 's/boshra_preview_160/boshra_preview_161/' app/src/main/assets/www/index.html || true
+          sed -i 's/const VER="1.6.0"/const VER="1.6.2"/' app/src/main/assets/www/index.html || true
+          sed -i 's/const VER="1.6.1"/const VER="1.6.2"/' app/src/main/assets/www/index.html || true
           grep -n 'const VER' app/src/main/assets/www/index.html | head -1
 
       - name: Set up JDK 17
@@ -76,26 +75,30 @@ jobs:
             -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
           APK=$(ls app/build/outputs/apk/release/*.apk | head -n1)
-          cp "$APK" "$GITHUB_WORKSPACE/Boshra-School-v1.6.1-release.apk"
-          ls -lh "$GITHUB_WORKSPACE/Boshra-School-v1.6.1-release.apk"
+          cp "$APK" "$GITHUB_WORKSPACE/Boshra-School-v1.6.2-release.apk"
+          ls -lh "$GITHUB_WORKSPACE/Boshra-School-v1.6.2-release.apk"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: boshra-1.6.1-apk
-          path: Boshra-School-v1.6.1-release.apk
+          name: boshra-1.6.2-apk
+          path: Boshra-School-v1.6.2-release.apk
           if-no-files-found: error
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.6.1
-          name: مدیریت کلاس بشری ۱.۶.۱
+          tag_name: v1.6.2
+          name: مدیریت کلاس بشری ۱.۶.۲
           body: |
-            نسخه ۱.۶.۱ — همان پیش‌نمایش کامل داخل WebView.
-            راه‌اندازی مدرسه، ورود، ادمین، نمره پویا، نوبت و تاریخ شمسی.
-            حساب اولیه: admin / admin123
-          files: Boshra-School-v1.6.1-release.apk
+            نسخه ۱.۶.۲
+            - غایبین هر کلاس در خانه
+            - حضور با دکمه‌های سبز/قرمز و توضیح
+            - پیام ایتا با انتخاب پایه/کلاس/دانش‌آموز
+            - آپلود لوگو و عکس دانش‌آموز
+            - آدرس سرور در ورود + سرور محلی
+            - فاصله safe-area و اسکرول کیبورد
+          files: Boshra-School-v1.6.2-release.apk
           draft: false
           prerelease: false
           make_latest: true
