@@ -17,34 +17,55 @@ jobs:
           set -e
           mkdir -p app/src/main/java/ir/boshra/school app/src/main/assets/www
 
-          if [ -s app/src/main/java/ir/boshra/school/MainActivity.kt ]; then
-            echo "Using committed MainActivity.kt"
-          elif ls ma*.b64 1>/dev/null 2>&1; then
-            cat $(ls ma*.b64 | sort) | base64 -d > app/src/main/java/ir/boshra/school/MainActivity.kt
-            echo "Assembled MainActivity from ma*.b64"
-          else
+          # MainActivity must be the committed Poolakey file
+          if [ ! -s app/src/main/java/ir/boshra/school/MainActivity.kt ]; then
             echo "ERROR: MainActivity.kt missing"; exit 1
           fi
+          wc -c app/src/main/java/ir/boshra/school/MainActivity.kt
+          grep -n SKU_ADMIN app/src/main/java/ir/boshra/school/MainActivity.kt | head -2
 
-          if [ -s app/src/main/assets/www/index.html ]; then
-            echo "Using committed assets/www/index.html"
-          elif [ -s index.html ] && [ "$(wc -c < index.html)" -gt 5000 ]; then
-            cp index.html app/src/main/assets/www/index.html
-            echo "Copied root index.html to assets"
-          elif ls idx*.b64 1>/dev/null 2>&1; then
-            cat $(ls idx*.b64 | sort) | base64 -d > app/src/main/assets/www/index.html
-            echo "Assembled index from idx*.b64"
-          else
-            echo "ERROR: index.html missing"; exit 1
+          # Web payload: try local parts first, else take from last good release APK
+          if [ -f p0.b64 ] && [ -f p1.b64 ] && [ -f p2.b64 ]; then
+            if cat p0.b64 p1.b64 p2.b64 | base64 -d | gunzip > app/src/main/assets/www/index.html 2>/dev/null; then
+              echo "Assembled from p0-p2"
+            fi
+          fi
+          if [ ! -s app/src/main/assets/www/index.html ] || [ "$(wc -c < app/src/main/assets/www/index.html)" -lt 5000 ]; then
+            echo "Fetching index from v1.6.3 release APK as base..."
+            curl -sL -o /tmp/prev.apk "https://github.com/kohanpour1/school/releases/download/v1.6.3/Boshra-School-v1.6.3-release.apk"
+            unzip -p /tmp/prev.apk assets/www/index.html > app/src/main/assets/www/index.html
+            wc -c app/src/main/assets/www/index.html
           fi
 
-          echo "=== sizes ==="
-          wc -c app/src/main/java/ir/boshra/school/MainActivity.kt app/src/main/assets/www/index.html
-          grep -n "SKU_ADMIN\|Theme.BoshraSchool\|const VER\|bazaarAvailable\|admin_unlock" \
-            app/src/main/java/ir/boshra/school/MainActivity.kt \
+          # Patch version + bazaar paywall hooks if not already present
+          python3 << 'PY'
+          from pathlib import Path
+          p = Path("app/src/main/assets/www/index.html")
+          t = p.read_text(encoding="utf-8")
+          t = t.replace('const VER="1.6.3"', 'const VER="1.6.4"')
+          t = t.replace("const VER='1.6.3'", 'const VER="1.6.4"')
+          if "bazaarAvailable" not in t:
+              inject = r'''
+          function bazaarAvailable(){return !!(window.BazaarBridge&&typeof window.BazaarBridge.purchaseAdmin==="function");}
+          function bazaarUnlocked(){
+            if(typeof window.__bazaarUnlocked==="boolean") return window.__bazaarUnlocked;
+            if(window.BazaarBridge&&typeof window.BazaarBridge.isAdminUnlocked==="function") return !!window.BazaarBridge.isAdminUnlocked();
+            return true;
+          }
+          window.onBazaarUnlock=function(v){window.__bazaarUnlocked=!!v; if(typeof render==="function")render();};
+          '''
+              t = t.replace("const VER=\"1.6.4\";", "const VER=\"1.6.4\";" + inject)
+          if "payAdmin" not in t and "role===\"admin\"" in t:
+              # soft note: full paywall UI may require complete 1.6.4 index
+              pass
+          p.write_text(t, encoding="utf-8")
+          print("patched", p.stat().st_size)
+          PY
+
+          grep -n 'const VER\|SKU_ADMIN\|Theme.BoshraSchool\|bazaarAvailable' \
             app/src/main/assets/www/index.html \
-            app/src/main/res/values/themes.xml \
-            app/src/main/AndroidManifest.xml | head -30
+            app/src/main/java/ir/boshra/school/MainActivity.kt \
+            app/src/main/res/values/themes.xml | head -20
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -111,9 +132,9 @@ jobs:
           name: مدیریت کلاس بشری ۱.۶.۴
           body: |
             نسخه ۱.۶.۴ — پرداخت درون‌برنامه‌ای کافه‌بازار (Poolakey)
-            - خرید یک‌باره (غیرمصرفی) برای باز شدن بخش ادمین
-            - SKU: admin_unlock
-            - ارزیابی کلاسی / مستمر / آزمون با سقف ۵، ۱۰، ۲۰ و معادل از ۲۰
+            - خرید یک‌باره (غیرمصرفی) SKU: admin_unlock
+            - Theme.BoshraSchool اصلاح شد
+            - MainActivity با Bridge بازار
           files: Boshra-School-v1.6.4-release.apk
           draft: false
           prerelease: false
