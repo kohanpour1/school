@@ -11,29 +11,59 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Assemble embedded assets
+
+      - name: Prepare sources
         run: |
+          set -e
           mkdir -p app/src/main/java/ir/boshra/school app/src/main/assets/www
-          cat $(ls ma*.b64 | sort) | base64 -d > app/src/main/java/ir/boshra/school/MainActivity.kt
-          cat $(ls idx*.b64 | sort) | base64 -d > app/src/main/assets/www/index.html
+
+          if [ -s app/src/main/java/ir/boshra/school/MainActivity.kt ]; then
+            echo "Using committed MainActivity.kt"
+          elif ls ma*.b64 1>/dev/null 2>&1; then
+            cat $(ls ma*.b64 | sort) | base64 -d > app/src/main/java/ir/boshra/school/MainActivity.kt
+            echo "Assembled MainActivity from ma*.b64"
+          else
+            echo "ERROR: MainActivity.kt missing"; exit 1
+          fi
+
+          if [ -s app/src/main/assets/www/index.html ]; then
+            echo "Using committed assets/www/index.html"
+          elif [ -s index.html ] && [ "$(wc -c < index.html)" -gt 5000 ]; then
+            cp index.html app/src/main/assets/www/index.html
+            echo "Copied root index.html to assets"
+          elif ls idx*.b64 1>/dev/null 2>&1; then
+            cat $(ls idx*.b64 | sort) | base64 -d > app/src/main/assets/www/index.html
+            echo "Assembled index from idx*.b64"
+          else
+            echo "ERROR: index.html missing"; exit 1
+          fi
+
+          echo "=== sizes ==="
           wc -c app/src/main/java/ir/boshra/school/MainActivity.kt app/src/main/assets/www/index.html
-          grep -n SKU_ADMIN app/src/main/java/ir/boshra/school/MainActivity.kt | head -2
-          grep -n 'const VER\|bazaarAvailable\|admin_unlock' app/src/main/assets/www/index.html | head -6
+          grep -n "SKU_ADMIN\|Theme.BoshraSchool\|const VER\|bazaarAvailable\|admin_unlock" \
+            app/src/main/java/ir/boshra/school/MainActivity.kt \
+            app/src/main/assets/www/index.html \
+            app/src/main/res/values/themes.xml \
+            app/src/main/AndroidManifest.xml | head -30
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
+
       - name: Generate Gradle Wrapper
         run: |
           if [ ! -f "./gradlew" ]; then
             gradle wrapper --gradle-version 8.9
             chmod +x ./gradlew
           fi
+
       - name: Prepare signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
@@ -54,27 +84,36 @@ jobs:
             echo "KEY_ALIAS=boshra" >> $GITHUB_ENV
             echo "KEY_PASSWORD=boshra123456" >> $GITHUB_ENV
           fi
+
       - name: Build signed Release APK
         run: |
           chmod +x ./gradlew
-          ./gradlew :app:assembleRelease --no-daemon -Pandroid.injected.signing.store.file="$STORE_FILE" -Pandroid.injected.signing.store.password="$STORE_PASSWORD" -Pandroid.injected.signing.key.alias="$KEY_ALIAS" -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+          ./gradlew :app:assembleRelease --no-daemon \
+            -Pandroid.injected.signing.store.file="$STORE_FILE" \
+            -Pandroid.injected.signing.store.password="$STORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
           APK=$(ls app/build/outputs/apk/release/*.apk | head -n1)
           cp "$APK" "$GITHUB_WORKSPACE/Boshra-School-v1.6.4-release.apk"
           ls -lh "$GITHUB_WORKSPACE/Boshra-School-v1.6.4-release.apk"
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: boshra-1.6.4-apk
           path: Boshra-School-v1.6.4-release.apk
           if-no-files-found: error
+
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.6.4
           name: مدیریت کلاس بشری ۱.۶.۴
           body: |
-            نسخه ۱.۶.۴ — پرداخت درون‌برنامه‌ای بازار (Poolakey)
-            SKU یک‌باره: admin_unlock (غیرمصرفی، بدون اشتراک)
+            نسخه ۱.۶.۴ — پرداخت درون‌برنامه‌ای کافه‌بازار (Poolakey)
+            - خرید یک‌باره (غیرمصرفی) برای باز شدن بخش ادمین
+            - SKU: admin_unlock
+            - ارزیابی کلاسی / مستمر / آزمون با سقف ۵، ۱۰، ۲۰ و معادل از ۲۰
           files: Boshra-School-v1.6.4-release.apk
           draft: false
           prerelease: false
