@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,interactive-widget=resizes-content"/>
+<meta name="theme-color" content="#5B2C8A"/>
+<title>مدیریت کلاس بشری</title>
+<style>
+:root{--p:#5B2C8A;--pd:#4A2470;--bg:#F6F1FB;--kb:0px}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:#1f1235;font-family:Tahoma,Arial,sans-serif;direction:rtl}
+body{padding-bottom:calc(12px + var(--kb))}
+.hdr{position:sticky;top:0;z-index:20;background:var(--p);color:#fff;padding:12px 14px;padding-top:calc(12px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:10px}
+.hdr h1{margin:0;font-size:1.05rem;flex:1}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:36px;padding:6px 10px;border-radius:999px;border:1px solid #d8c7ea;background:#fff;cursor:pointer;font-size:13px}
+.chip.on-p{background:#dcfce7;border-color:#86efac;color:#166534;font-weight:700}
+.chip.on-a{background:#fee2e2;border-color:#fca5a5;color:#991b1b;font-weight:700}
+.card{background:#fff;border:1px solid #ebe0f5;border-radius:14px;padding:14px;margin:12px;box-shadow:0 4px 14px rgba(91,44,138,.06)}
+.btn{background:var(--p);color:#fff;border:0;border-radius:12px;padding:12px 14px;width:100%;font-weight:700;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--p);border:1px solid #d8c7ea}
+.btn.danger,.danger{background:#dc2626;color:#fff;border:0;border-radius:8px;padding:6px 10px;cursor:pointer}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid #d8c7ea;border-radius:10px;font-family:inherit;margin-top:6px}
+.tabs{display:flex;gap:6px;overflow:auto;padding:10px 12px}
+.tabs button{flex:0 0 auto;background:#fff;border:1px solid #d8c7ea;border-radius:999px;padding:8px 12px;color:var(--p);cursor:pointer}
+.tabs button.on{background:var(--p);color:#fff;border-color:var(--p)}
+.muted{color:#6b7280;font-size:13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #f1e8fa}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center;z-index:50;padding:12px}
+.modal .card{width:100%;max-width:520px;margin:0;max-height:85vh;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid #f1e8fa;padding:6px;text-align:right}
+.att-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f1e8fa}
+.att-row .name{flex:1}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1f1235;color:#fff;padding:10px 16px;border-radius:999px;z-index:99;font-size:13px}
+#app{min-height:100vh}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const VER="1.6.4";
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const fa = n => String(n).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+const uid = () => Math.random().toString(36).slice(2,10);
+const toast = (m)=>{const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)};
+function bazaarAvailable(){return !!(window.BazaarBridge&&typeof window.BazaarBridge.purchaseAdmin==="function");}
+function bazaarUnlocked(){
+  if(typeof window.__bazaarUnlocked==="boolean") return window.__bazaarUnlocked;
+  if(window.BazaarBridge&&typeof window.BazaarBridge.isAdminUnlocked==="function") return !!window.BazaarBridge.isAdminUnlocked();
+  return true;
+}
+window.onBazaarUnlock=function(v){window.__bazaarUnlocked=!!v;render();};
+function showPaywall(){
+  return '<div class="card"><h2 style="text-align:center;color:var(--p)">فعال‌سازی بخش ادمین</h2>'+
+    '<p class="muted" style="text-align:center">برای ورود به پنل مدیریت، خرید یک‌باره لازم است (بدون اشتراک).</p>'+
+    '<p class="muted" style="text-align:center">شناسه محصول: admin_unlock</p>'+
+    '<button class="btn" id="payAdmin">پرداخت و باز کردن ادمین</button>'+
+    '<button class="btn ghost" id="payBack" style="margin-top:8px">بازگشت</button></div>';
+}
